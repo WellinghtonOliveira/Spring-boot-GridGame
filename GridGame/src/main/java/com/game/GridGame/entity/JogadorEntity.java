@@ -28,8 +28,8 @@ public class JogadorEntity {
     public JogadorEntity(String nome) {
         this.nome = nome;
         this.vida = 3;
-        this.cor = "whitesmoke";
-        this.x = 4 * 40;
+        this.cor = "#002366";
+        this.x = 0 * 40;
         this.y = 0 * 40;
         this.velocityX = 3;
         this.velocityY = 0.8;
