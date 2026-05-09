@@ -12,7 +12,7 @@ public class MapController {
     private ServiceMap serviceMaps = new ServiceMap();
 
     @GetMapping
-    public char[][] obtemMaps() {
+    public String[][] obtemMaps() {
         return serviceMaps.obterMapa(null);
     }
 
