@@ -1,0 +1,87 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+#game {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+#grid {
+    display: grid;
+    position: relative;
+}
+
+#player {
+    display: none;
+    width: 39px;
+    height: 39px;
+    background: whitesmoke;
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.15s linear;
+    z-index: 10;
+}
+
+.cell {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    height: 40px;
+    width: 40px;
+}
+
+.container-criacao {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-criacao a {
+    width: auto;
+    height: auto;
+    color: black;
+    text-decoration: none;
+}
+
+.label {
+    text-align: center;
+    padding: 15px;
+    width: 200px;
+    border: 1px solid white;
+    margin: 5px;
+}
+
+.label p {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.label input {
+    margin-top: 5px;
+    width: 100%;
+    padding: 4px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: white;
+}
