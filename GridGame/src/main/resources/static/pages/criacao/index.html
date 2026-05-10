@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <title>Criacao | GridMap</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="voltar"><a href="./../../">VOLTAR</a></div>
+
+        <div class="container-titulo">
+
+            <div class="linhas">
+                <p>Linhas</p>
+                <input id="input-linhas" type="number" value="15">
+            </div>
+
+            <div class="colunas">
+                <p>Colunas</p>
+                <input id="input-colunas" type="number" value="50">
+            </div>
+            
+            <div>
+                <p>Bloco</p>
+                <select name="lista-blocos" id="lista-blocos">
+                    <option selected value="chao">CHÃO</option>
+                </select>
+            </div>
+
+            <div>
+                <p>Gerar</p>
+                <input id="button-gerar" type="button" value="</>">
+            </div>
+
+            <div>
+                <p>CopyCode</p>
+                <input id="button-copiar" type="button" value="[/]">
+            </div>
+
+        </div>
+
+        <div id="grid-container"></div>
+    </div>
+
+    <script src="./script/scripts.js"></script>
+</body>
+
+</html>
