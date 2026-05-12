@@ -30,23 +30,32 @@ public class ServiceJogador {
             return jogador;
         }
 
+        int posX = (int) (jogador.getX() / 40);
+        int posY = (int) (jogador.getY() / 40);
         switch (direcao) {
             case "ArrowRight":
-                jogador.setX(jogador.getX() + velocity);
+                if (mapa[posY][posX + 1].equals("vazio")) {
+                    jogador.setX(jogador.getX() + velocity);
+                }
                 break;
             case "ArrowLeft":
-                jogador.setX(jogador.getX() - velocity);
+                if (mapa[posY][posX].equals("vazio")) {
+                    jogador.setX(jogador.getX() - velocity);
+                }
                 break;
             case "ArrowUp":
                 if (jogador.getPulo()) {
-                    int alturaDesejada = 120; 
+                    int alturaDesejada = 120;
                     int movido = 0;
 
                     while (movido < alturaDesejada) {
                         int proximoY = (int) ((jogador.getY() - 40) / 40);
                         int atualX = (int) (jogador.getX() / 40);
 
-                        if (proximoY >= 0 && mapa[proximoY][atualX].equals("vazio")) {
+                        if (proximoY >= 0 &&
+                            mapa[proximoY][atualX].equals("vazio") &&
+                            observerColisionHead()) {
+                    
                             jogador.setY(jogador.getY() - 40);
                             movido += 40;
                         } else {
@@ -63,9 +72,6 @@ public class ServiceJogador {
     }
 
     public JogadorEntity observerPlayer() {
-        String[][] mapa = mapaService.obterMapa(null);
-
-        int x = (int) jogador.getX() / 40;
         int y = (int) (jogador.getY() / 40);
 
         if (y >= mapaService.obterAltura() - 1) {
@@ -74,17 +80,58 @@ public class ServiceJogador {
             return jogador;
         }
 
-        if (y + 1 < mapaService.obterAltura() && x >= 0 && x < mapaService.obterLargura()) {
-            if (mapa[y + 1][x].equals("chao")) {
-                jogador.setPulo(true);
-                jogador.setY(y * 40);
-                return jogador;
-            }
+        if (observerColisionFoot()) {
+            jogador.setPulo(true);
+            return jogador;
         }
 
         jogador.setPulo(false);
         jogador.setY(jogador.getY() + (jogador.getVelocityY() * jogador.getGravity()));
         return jogador;
+    }
+
+    public Boolean observerColisionHead() {
+        String[][] mapa = mapaService.obterMapa(null);
+
+        int x = (int) jogador.getX() / 40;
+        int y = (int) (jogador.getY() / 40);
+
+        int xEsquerda = (int) (jogador.getX() / 40);
+        int xDireita = (int) ((jogador.getX() + 39) / 40);
+        int yCima = (int) ((jogador.getY() - 1) / 40);
+
+        if (y + 1 < mapaService.obterAltura() &&
+                x >= 0 &&
+                x < mapaService.obterLargura()) {
+                    
+            if (mapa[yCima][xEsquerda].equals("vazio") &&
+                    mapa[yCima][xDireita].equals("vazio")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean observerColisionFoot() {
+        String[][] mapa = mapaService.obterMapa(null);
+
+        int x = (int) jogador.getX() / 40;
+        int y = (int) (jogador.getY() / 40);
+
+        int xEsquerda = (int) (jogador.getX() / 40);
+        int xDireita = (int) ((jogador.getX() + 39) / 40);
+        int yAbaixo = (int) ((jogador.getY() + 41) / 40);
+
+        if (y + 1 < mapaService.obterAltura() &&
+                x >= 0 &&
+                x < mapaService.obterLargura()) {
+
+            if (mapa[yAbaixo][xEsquerda].equals("chao") ||
+                    mapa[yAbaixo][xDireita].equals("chao")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public JogadorEntity getJogador() {
