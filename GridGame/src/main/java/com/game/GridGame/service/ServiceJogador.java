@@ -15,9 +15,6 @@ public class ServiceJogador {
 
     public JogadorEntity moverJogador(String direcao) {
         double velocity = jogador.getVelocityX();
-
-        String[][] mapa = mapaService.obterMapa(null);
-
         int larguraMapa = mapaService.obterLargura();
 
         if (jogador.getX() < 2 && direcao.equals("ArrowLeft") ||
@@ -26,44 +23,29 @@ public class ServiceJogador {
             return jogador;
         }
 
-        if (jogador.getY() < 1) {
-            return jogador;
-        }
-
-        int posX = (int) (jogador.getX() / 40);
-        int posY = (int) (jogador.getY() / 40);
         switch (direcao) {
             case "ArrowRight":
-                if (mapa[posY][posX + 1].equals("vazio")) {
+                if (observerColisionDirections("direita")) {
                     jogador.setX(jogador.getX() + velocity);
                 }
                 break;
             case "ArrowLeft":
-                if (mapa[posY][posX].equals("vazio")) {
+                if (observerColisionDirections("esquerda")) {
                     jogador.setX(jogador.getX() - velocity);
                 }
                 break;
             case "ArrowUp":
-                if (jogador.getPulo()) {
-                    int alturaDesejada = 120;
-                    int movido = 0;
-
-                    while (movido < alturaDesejada) {
-                        int proximoY = (int) ((jogador.getY() - 40) / 40);
-                        int atualX = (int) (jogador.getX() / 40);
-
-                        if (proximoY >= 0 &&
-                            mapa[proximoY][atualX].equals("vazio") &&
-                            observerColisionHead()) {
-                    
-                            jogador.setY(jogador.getY() - 40);
-                            movido += 40;
-                        } else {
-                            break;
-                        }
+                if (observerColisionHead()) {
+                    if (jogador.getQuantiaPulo() <= 0) {
+                        jogador.setEmpuxo(true);
+                        jogador.setQuantiaPulo(80);
+                        System.out.println(jogador.getQuantiaPulo());
+                        break;
                     }
 
-                    jogador.setPulo(false);
+                    jogador.setEmpuxo(false);
+                    jogador.setY(jogador.getY() - 2);
+                    jogador.setQuantiaPulo(jogador.getQuantiaPulo() - 2);
                 }
                 break;
         }
@@ -76,18 +58,43 @@ public class ServiceJogador {
 
         if (y >= mapaService.obterAltura() - 1) {
             jogador.setY((mapaService.obterAltura() - 1) * 40);
-            jogador.setPulo(true);
             return jogador;
         }
 
-        if (observerColisionFoot()) {
-            jogador.setPulo(true);
-            return jogador;
+        if (!observerColisionFoot() && jogador.getEmpuxo()) {
+            jogador.setY((jogador.getY() + jogador.getGravity()));
         }
 
-        jogador.setPulo(false);
-        jogador.setY(jogador.getY() + (jogador.getVelocityY() * jogador.getGravity()));
         return jogador;
+    }
+
+    public Boolean observerColisionDirections(String direction) {
+        String[][] mapa = mapaService.obterMapa(null);
+
+        int x = (int) (jogador.getX() / 40);
+        int y = (int) (jogador.getY() / 40);
+
+        int xDireita = (int) ((jogador.getX() + 41) / 40);
+        int xEsquerda = (int) ((jogador.getX() - 1) / 40);
+
+        int yCima = (int) ((jogador.getY() + 2) / 40);
+        int yBaixo = (int) ((jogador.getY() + 38) / 40);
+
+        if (x >= 0 &&
+                y + 1 < mapaService.obterAltura() &&
+                x < mapaService.obterLargura()) {
+
+            if (direction.equals("direita") &&
+                    mapa[yCima][xDireita].equals("vazio") &&
+                    mapa[yBaixo][xDireita].equals("vazio")) {
+                return true;
+            } else if (direction.equals("esquerda") &&
+                    mapa[yCima][xEsquerda].equals("vazio") &&
+                    mapa[yBaixo][xEsquerda].equals("vazio")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Boolean observerColisionHead() {
@@ -103,7 +110,7 @@ public class ServiceJogador {
         if (y + 1 < mapaService.obterAltura() &&
                 x >= 0 &&
                 x < mapaService.obterLargura()) {
-                    
+
             if (mapa[yCima][xEsquerda].equals("vazio") &&
                     mapa[yCima][xDireita].equals("vazio")) {
                 return true;
