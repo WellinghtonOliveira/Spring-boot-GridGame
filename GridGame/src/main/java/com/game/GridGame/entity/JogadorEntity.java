@@ -18,11 +18,13 @@ public class JogadorEntity {
     private double y;
 
     private double velocityX;
-    private double velocityY;
 
     private long gravity;
     private long lastMoveTime;
 
+    private int quantiaPulo;
+
+    private boolean empuxo;
     private boolean pulo;
 
     public JogadorEntity(String nome) {
@@ -32,10 +34,11 @@ public class JogadorEntity {
         this.x = 0 * 39;
         this.y = 0 * 39;
         this.velocityX = 2;
-        this.velocityY = 0.8;
-        this.gravity = 10;
+        this.gravity = 4;
         this.lastMoveTime = 0;
+        this.quantiaPulo = 80; // Teto 80
         this.pulo = false;
+        this.empuxo = true;
     }
 
     public void setNome(String nome) {
@@ -62,10 +65,6 @@ public class JogadorEntity {
         this.velocityX = velocityX;
     }
 
-    public void setVelocityY(double velocityY) {
-        this.velocityY = velocityY;
-    }
-
     public void setGravity(long gravity) {
         this.gravity = gravity;
     }
@@ -76,6 +75,14 @@ public class JogadorEntity {
 
     public void setPulo(boolean pulo) {
         this.pulo = pulo;
+    }
+
+    public void setQuantiaPulo(int quantiaPulo) {
+        this.quantiaPulo = quantiaPulo;
+    }
+
+    public void setEmpuxo(boolean empuxo) {
+        this.empuxo = empuxo;
     }
 
     public String getNome() {
@@ -102,10 +109,6 @@ public class JogadorEntity {
         return velocityX;
     }
 
-    public double getVelocityY() {
-        return velocityY;
-    }
-
     public long getGravity() {
         return gravity;
     }
@@ -116,5 +119,13 @@ public class JogadorEntity {
 
     public boolean getPulo() {
         return pulo;
+    }
+
+    public int getQuantiaPulo() {
+        return quantiaPulo;
+    }
+
+    public boolean getEmpuxo() {
+        return empuxo;
     }
 }
