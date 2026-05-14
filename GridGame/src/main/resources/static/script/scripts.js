@@ -8,7 +8,6 @@ let posOldY;
 const teclas = {
     "ArrowRight": false,
     "ArrowLeft": false,
-    "ArrowUp": false
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -79,7 +78,7 @@ function moveJogador() {
     document.addEventListener('keyup', (e) => {
         if (!window.jogadorOn) return;
 
-        if (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
             teclas[e.key] = false;
             client.publish({
                 destination: "/app/stop",
@@ -165,8 +164,6 @@ async function carregarMapas() {
 
         const input = await fetch(url + "maps");
         MAPAS = await input.json();
-        
-        console.log(MAPAS)
 
     } catch (error) {
         console.log("Erro: " + error);
