@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
         containerEscolhas.style.display = "none";
         game.style.display = "grid";
         window.jogadorOn = true;
-        console.log(window.jogadorOn)
     })
 
 })
