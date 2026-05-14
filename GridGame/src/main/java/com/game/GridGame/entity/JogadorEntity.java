@@ -19,8 +19,7 @@ public class JogadorEntity {
 
     private double velocityX;
 
-    private long gravity;
-    private long lastMoveTime;
+    private double gravity;
 
     private int quantiaPulo;
 
@@ -33,10 +32,9 @@ public class JogadorEntity {
         this.cor = "#002366";
         this.x = 0 * 39;
         this.y = 0 * 39;
-        this.velocityX = 2;
-        this.gravity = 4;
-        this.lastMoveTime = 0;
-        this.quantiaPulo = 80; // Teto 80
+        this.velocityX = 1.5;
+        this.gravity = 0;
+        this.quantiaPulo = 15; // TETO
         this.pulo = false;
         this.empuxo = true;
     }
@@ -65,12 +63,8 @@ public class JogadorEntity {
         this.velocityX = velocityX;
     }
 
-    public void setGravity(long gravity) {
+    public void setGravity(double gravity) {
         this.gravity = gravity;
-    }
-
-    public void setLastMoveTime(long lastMoveTime) {
-        this.lastMoveTime = lastMoveTime;
     }
 
     public void setPulo(boolean pulo) {
@@ -109,12 +103,8 @@ public class JogadorEntity {
         return velocityX;
     }
 
-    public long getGravity() {
+    public double getGravity() {
         return gravity;
-    }
-
-    public long getLastMoveTime() {
-        return lastMoveTime;
     }
 
     public boolean getPulo() {
