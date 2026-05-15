@@ -16,6 +16,6 @@ public class PlayerRestController {
 
     @GetMapping("/player")
     public JogadorEntity obtemJogadorInicial() {
-        return serviceJogador.getJogador();
+        return serviceJogador.criarJogador();
     }
 }
