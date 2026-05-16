@@ -1,83 +1,97 @@
 package com.game.GridGame.service;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.stereotype.Service;
 import com.game.GridGame.entity.JogadorEntity;
 
 @Service
 public class ServiceJogador {
-    private JogadorEntity jogador;
+    private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>();
     private ServiceMap mapaService;
 
-    public ServiceJogador() {
-        this.jogador = new JogadorEntity(null);
-        this.mapaService = new ServiceMap();
+    public ServiceJogador(ServiceMap mapaService) {
+        this.mapaService = mapaService;
     }
 
-    public JogadorEntity moverJogador(String direcao) {
+    public void moverJogador(String id, String direcao) {
+        JogadorEntity jogador = jogadores.get(id);
+
+        if (jogador == null) return;
+
         double velocity = jogador.getVelocityX();
         int larguraMapa = mapaService.obterLargura();
 
         if (jogador.getX() < 2 && direcao.equals("ArrowLeft") ||
                 jogador.getX() > (larguraMapa * 40) - 41 && direcao.equals("ArrowRight")) {
             jogador.setX(jogador.getX());
-            return jogador;
         }
 
         switch (direcao) {
             case "ArrowRight":
-                if (observerColisionDirections("direita")) {
+                if (observerColisionDirections("direita", jogador)) {
                     jogador.setX(jogador.getX() + velocity);
                 } else {
-                    int xBloco = ((int)((jogador.getX() + 39 + jogador.getVelocityX()) / 40)) * 40;
+                    int xBloco = ((int) ((jogador.getX() + 39 + jogador.getVelocityX()) / 40)) * 40;
                     jogador.setX(xBloco - 40);
                 }
 
                 break;
             case "ArrowLeft":
-                if (observerColisionDirections("esquerda")) {
+                if (observerColisionDirections("esquerda", jogador)) {
                     jogador.setX(jogador.getX() - velocity);
                 } else {
-                    int xBloco = ((int)((jogador.getX() + 39 + jogador.getVelocityX()) / 40)) * 40;
+                    int xBloco = ((int) ((jogador.getX() + 39 + jogador.getVelocityX()) / 40)) * 40;
                     jogador.setX(xBloco - 40);
                 }
 
                 break;
             case "ArrowUp":
-                if (observerColisionFoot()) {
+                if (observerColisionFoot(jogador)) {
                     jogador.setPulo(true);
                     jogador.setEmpuxo(false);
                 }
-                
+
                 break;
         }
-
-        return jogador;
     }
 
-    public JogadorEntity observerPlayer() {
-        if (jogador.getY() / 40 >= mapaService.obterAltura() - 1) {
-            jogador.setY((mapaService.obterAltura() - 1) * 40);
-            return jogador;
+    public Collection<JogadorEntity> getJogadores() {
+        return jogadores.values();
+    }
+
+    public void observerPlayer(String id) {
+        JogadorEntity jogador = jogadores.get(id);
+        
+        System.out.println(id);
+        if (jogador == null) {
+            return;
         }
 
-        observerCanJump();
-        boolean noChao = observerColisionFoot();
+        if (jogador.getY() / 40 >= mapaService.obterAltura() - 1) {
+            jogador.setY((mapaService.obterAltura() - 1) * 40);
+            System.out.println("ID recebido: " + id);
+            System.out.println("Jogadores: " + jogadores.keySet());
+        }
+
+        observerCanJump(jogador);
+        boolean noChao = observerColisionFoot(jogador);
 
         if (!noChao && jogador.getEmpuxo()) {
-            if (colisaoPosPuloFoot()) {
+            if (colisaoPosPuloFoot(jogador)) {
                 int yBloco = ((int) ((jogador.getY() + 39 + jogador.getGravity()) / 40)) * 40;
                 jogador.setY(yBloco - 40);
                 jogador.setGravity(0);
             }
-            gravidade();
+            gravidade(jogador);
         } else if (noChao) {
             jogador.setGravity(0);
         }
-
-        return jogador;
     }
 
-    public Boolean colisaoPosPuloFoot() {
+    public Boolean colisaoPosPuloFoot(JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(null);
 
         int x = (int) jogador.getX() / 40;
@@ -100,7 +114,7 @@ public class ServiceJogador {
         return false;
     }
 
-    public Boolean observerColisionDirections(String direction) {
+    public Boolean observerColisionDirections(String direction, JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(null);
 
         int x = (int) (jogador.getX() / 40);
@@ -129,8 +143,10 @@ public class ServiceJogador {
         return false;
     }
 
-    public Boolean observerColisionHead() {
+    public Boolean observerColisionHead(JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(null);
+
+        int alturaMapa = mapaService.obterAltura();
 
         int x = (int) jogador.getX() / 40;
         int y = (int) (jogador.getY() / 40);
@@ -139,7 +155,8 @@ public class ServiceJogador {
         int xDireita = (int) ((jogador.getX() + 39) / 40);
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
-        if (y + 1 < mapaService.obterAltura() &&
+        if (y + 1 < alturaMapa &&
+                y - 1 > 0 &&
                 x >= 0 &&
                 x < mapaService.obterLargura()) {
 
@@ -151,7 +168,7 @@ public class ServiceJogador {
         return false;
     }
 
-    public Boolean observerColisionFoot() {
+    public Boolean observerColisionFoot(JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(null);
 
         int x = (int) jogador.getX() / 40;
@@ -173,10 +190,10 @@ public class ServiceJogador {
         return false;
     }
 
-    public void observerCanJump() {
+    public void observerCanJump(JogadorEntity jogador) {
         if (jogador.getPulo()) {
             if (jogador.getQuantiaPulo() > 0) {
-                if (observerColisionHead()) {
+                if (observerColisionHead(jogador)) {
 
                     jogador.setY(jogador.getY() - 4);
                     jogador.setQuantiaPulo(jogador.getQuantiaPulo() - 1);
@@ -193,7 +210,7 @@ public class ServiceJogador {
         }
     }
 
-    public void gravidade() {
+    public void gravidade(JogadorEntity jogador) {
         jogador.setY(jogador.getY() + jogador.getGravity());
 
         if (jogador.getGravity() < 15) {
@@ -201,7 +218,14 @@ public class ServiceJogador {
         }
     }
 
-    public JogadorEntity getJogador() {
+    public JogadorEntity criarJogador() {
+        JogadorEntity jogador = new JogadorEntity("PLAYER");
+        jogadores.put(jogador.getId(), jogador);
         return jogador;
     }
 }
+
+// TODO correções
+// player: muito largo
+// ao pular de um bloco de baixo para cima em uma abertura de 1 bloco o player e
+// lancado para cima, verificar as colisoes
