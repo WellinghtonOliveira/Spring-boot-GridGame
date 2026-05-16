@@ -22,15 +22,10 @@ public class ServiceJogador {
         if (jogador == null) return;
 
         double velocity = jogador.getVelocityX();
-        int larguraMapa = mapaService.obterLargura();
-
-        if (jogador.getX() < 2 && direcao.equals("ArrowLeft") ||
-                jogador.getX() > (larguraMapa * 40) - 41 && direcao.equals("ArrowRight")) {
-            jogador.setX(jogador.getX());
-        }
 
         switch (direcao) {
             case "ArrowRight":
+                if (((jogador.getX() + 40) / 40) > mapaService.obterLargura() + 1) return;
                 if (observerColisionDirections("direita", jogador)) {
                     jogador.setX(jogador.getX() + velocity);
                 } else {
@@ -40,6 +35,7 @@ public class ServiceJogador {
 
                 break;
             case "ArrowLeft":
+                if (((jogador.getX() - 1) / 40) < 0) return;
                 if (observerColisionDirections("esquerda", jogador)) {
                     jogador.setX(jogador.getX() - velocity);
                 } else {
@@ -64,7 +60,7 @@ public class ServiceJogador {
 
     public void observerPlayer(String id) {
         JogadorEntity jogador = jogadores.get(id);
-        
+
         System.out.println(id);
         if (jogador == null) {
             return;
