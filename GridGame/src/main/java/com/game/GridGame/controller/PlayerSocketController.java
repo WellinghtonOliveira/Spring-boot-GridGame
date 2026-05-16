@@ -20,7 +20,6 @@ public class PlayerSocketController {
     }
 
     @MessageMapping("/move")
-    @SendTo("/topic/player")
     public void mover(MovimentoDTO movimento) {
         serviceJogador.moverJogador(movimento.getId(), movimento.getDirecao());
     }
@@ -28,7 +27,6 @@ public class PlayerSocketController {
     @MessageMapping("/observer")
     @SendTo("/topic/player")
     public Collection<JogadorEntity> observador(MovimentoDTO movimento) {
-        serviceJogador.observerPlayer(movimento.getId());
         return serviceJogador.getJogadores();
     }
 }
