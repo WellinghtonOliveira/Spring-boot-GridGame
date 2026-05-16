@@ -1,14 +1,16 @@
 package com.game.GridGame.entity;
 
-import org.hibernate.annotations.UuidGenerator;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
+@JsonPropertyOrder({"id", "nome", "vida", "cor", "x", "y", "velocityX", "gravity", "quantiaPulo", "empuxo", "pulo"})
 public class JogadorEntity {
     @Id
-    @UuidGenerator
     private String id;
     private String nome;
     private int vida;
@@ -27,6 +29,7 @@ public class JogadorEntity {
     private boolean pulo;
 
     public JogadorEntity(String nome) {
+        this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.vida = 3;
         this.cor = "#002366";
@@ -34,7 +37,7 @@ public class JogadorEntity {
         this.y = 0 * 39;
         this.velocityX = 1.5;
         this.gravity = 0;
-        this.quantiaPulo = 15; // TETO
+        this.quantiaPulo = 20; // TETO
         this.pulo = false;
         this.empuxo = true;
     }
@@ -77,6 +80,10 @@ public class JogadorEntity {
 
     public void setEmpuxo(boolean empuxo) {
         this.empuxo = empuxo;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNome() {
