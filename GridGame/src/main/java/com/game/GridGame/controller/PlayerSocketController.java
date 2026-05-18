@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import com.game.GridGame.dto.MovimentoDTO;
+import com.game.GridGame.dto.InfPLayers;
 import com.game.GridGame.entity.JogadorEntity;
 import com.game.GridGame.service.ServiceJogador;
 
@@ -20,13 +20,14 @@ public class PlayerSocketController {
     }
 
     @MessageMapping("/move")
-    public void mover(MovimentoDTO movimento) {
-        serviceJogador.moverJogador(movimento.getId(), movimento.getDirecao());
+    public void mover(InfPLayers infPlayer) {
+        serviceJogador.moverJogador(infPlayer.getId(), infPlayer.getDirecao());
     }
 
     @MessageMapping("/observer")
     @SendTo("/topic/player")
-    public Collection<JogadorEntity> observador(MovimentoDTO movimento) {
+    public Collection<JogadorEntity> observador(InfPLayers infPlayer) {
+        serviceJogador.observerPlayer(infPlayer.getId());
         return serviceJogador.getJogadores();
     }
 }
