@@ -33,8 +33,8 @@ public class JogadorEntity {
         this.nome = nome;
         this.vida = 3;
         this.cor = "#002366";
-        this.x = 0 * 39;
-        this.y = 0 * 39;
+        this.x = 0;
+        this.y = 0;
         this.velocityX = 1.5;
         this.gravity = 0;
         this.quantiaPulo = 20; // TETO
