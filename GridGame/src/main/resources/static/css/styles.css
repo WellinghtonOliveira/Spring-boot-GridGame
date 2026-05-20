@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     background-color: black;
     overflow: hidden;
@@ -16,19 +17,12 @@ body {
     height: 100%;
 }
 
-#game {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-}
-
 #grid {
     display: grid;
     position: relative;
 }
 
-#player {
-    display: none;
+.player {
     width: 39px;
     height: 39px;
     background: whitesmoke;
@@ -47,6 +41,7 @@ body {
 }
 
 .container-criacao {
+    position: fixed;
     display: flex;
     flex-direction: column;
     width: 100%;
