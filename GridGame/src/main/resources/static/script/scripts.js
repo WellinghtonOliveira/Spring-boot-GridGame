@@ -1,9 +1,17 @@
-const grid = document.querySelector("#grid");
 const url = "http://localhost:8080/";
 
+//TODO salvar os dados do player como um objeto id, nome, cor, vida.
+
+let id = "";
+let grid;
+let game;
 let MAPAS;
-let posOldX;
-let posOldY;
+
+
+let cameraX = 0;
+let cameraY = 0;
+
+
 
 const teclas = {
     "ArrowRight": false,
@@ -11,6 +19,9 @@ const teclas = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    game = document.getElementById("game");
+    grid = document.querySelector("#grid");
+
     document.getElementById("game").style.display = "none";
     document.getElementById("button-comecar").addEventListener("click", () => observer());
 
@@ -30,14 +41,20 @@ function loop() {
     if (teclas['ArrowRight']) {
         client.publish({
             destination: "/app/move",
-            body: "ArrowRight"
+            body: JSON.stringify({
+                id: id,
+                direcao: "ArrowRight",
+            })
         });
     }
 
     if (teclas['ArrowLeft']) {
         client.publish({
             destination: "/app/move",
-            body: "ArrowLeft"
+            body: JSON.stringify({
+                id: id,
+                direcao: "ArrowLeft",
+            })
         });
     }
 
@@ -47,10 +64,12 @@ function loop() {
 function observer() {
     setInterval(() => {
         client.publish({
-            destination: "/app/observer"
+            destination: "/app/observer",
+            body: JSON.stringify({
+                id: id
+            })
         });
     }, 16)
-
 }
 
 function moveJogador() {
@@ -70,7 +89,10 @@ function moveJogador() {
             if (e.repeat) return;
             client.publish({
                 destination: "/app/move",
-                body: "ArrowUp"
+                body: JSON.stringify({
+                    id: id,
+                    direcao: "ArrowUp",
+                })
             });
         }
     });
@@ -96,21 +118,55 @@ async function geraJogador() {
     } catch (error) {
         console.log("Error: " + error);
     }
-
-    let x = dataJogador.x;
-    let y = dataJogador.y;
-
-    posOldX = x;
-    posOldY = y;
-
-    desenharJogador(dataJogador);
+    id = dataJogador.id;
 }
 
-function desenharJogador(jogador) {
-    const player = document.getElementById("player");
+function desenharJogadoresMultplayer(jogadores) {
+    jogadores.forEach(jogador => {
+        let player = document.getElementById(jogador.id);
 
-    player.style.transform = `translate(${jogador.x}px, ${jogador.y}px)`
-    player.style.display = 'block';
+        if (!player) {
+            player = document.createElement("div");
+            player.id = jogador.id;
+            player.classList.add("player");
+            game.appendChild(player);
+        }
+
+        if (jogador.id === id) {
+            atualizarCamera(jogador);
+        }
+
+        player.style.transform = `translate(${jogador.x}px, ${jogador.y}px)`;
+    });
+}
+
+function atualizarCamera(jogador) {
+    const MARGIN = 120;
+
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+
+    const playerScreenX = jogador.x - cameraX;
+    const playerScreenY = jogador.y - cameraY;
+
+    if (playerScreenX < 80) { // esquerda
+        cameraX -= (80 - playerScreenX);
+    }
+
+    if (playerScreenX > screenW - 80) { // direita
+        cameraX += (playerScreenX - (screenW - 80));
+        console.log(playerScreenX, screenW)
+    }
+
+    if (playerScreenY < MARGIN) {
+        cameraY -= (MARGIN - playerScreenY);
+    }
+
+    if (playerScreenY > screenH - MARGIN) {
+        cameraY += (playerScreenY - (screenH - MARGIN));
+    }
+
+    game.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
 }
 
 function desenharBlock() {
