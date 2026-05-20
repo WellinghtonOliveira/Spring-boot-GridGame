@@ -17,9 +17,10 @@
 
     <div class="container">
 
-        <div id="game">
-            <div id="grid"></div>
-            <div id="player"></div>
+        <div id="camera">
+            <div id="game">
+                <div id="grid"></div>
+            </div>
         </div>
 
         <div class="container-criacao" id="container-criacao">
@@ -28,7 +29,7 @@
                 <p>Mapa padrão</p>
                 <input type="button" id="button-comecar" value="COMECE">
             </div>
-
+ 
             <div class="label">
                 <p>Crie seu proprio mapa</p>
                 <input type="button" id="button-criar-mapa" value="CRIAR">
@@ -47,10 +48,11 @@
             onConnect: () => {
                 window.jogadorOn = false;
 
+
                 client.subscribe("/topic/player", (msg) => {
                     const jogador = JSON.parse(msg.body);
 
-                    if (jogadorOn) desenharJogador(jogador);
+                    if (jogadorOn) desenharJogadoresMultplayer(jogador);
                 });
 
             }
@@ -63,11 +65,6 @@
                 console.log("Ainda não conectou!");
                 return;
             }
-
-            client.publish({
-                destination: "/app/move",
-                body: "teste"
-            });
         }
     </script>
 </body>
