@@ -1,18 +1,16 @@
 const url = "http://localhost:8080/";
 
-//TODO salvar os dados do player como um objeto id, nome, cor, vida.
+let jogador = {
+    "id": ""
+}
 
-let id = "";
 let grid;
 let tela;
 let game;
 let MAPAS;
 
-
 let cameraX = 0;
 let cameraY = 0;
-
-
 
 const teclas = {
     "ArrowRight": false,
@@ -25,18 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
     tela = document.getElementById("tela-fundo");
 
     document.getElementById("game").style.display = "none";
-    document.getElementById("button-comecar").addEventListener("click", () => observer());
+    document.getElementById("button-comecar").addEventListener("click", async () => {observer(); await geraJogador(); moveJogador(); loop();});
 
     async function init() {
         await carregarMapas();
         desenharGrid();
         desenharBlock();
-        await geraJogador();
     }
 
     init();
-    moveJogador();
-    loop();
 })
 
 function loop() {
@@ -44,7 +39,7 @@ function loop() {
         client.publish({
             destination: "/app/move",
             body: JSON.stringify({
-                id: id,
+                id: jogador.id,
                 direcao: "ArrowRight",
             })
         });
@@ -54,7 +49,7 @@ function loop() {
         client.publish({
             destination: "/app/move",
             body: JSON.stringify({
-                id: id,
+                id: jogador.id,
                 direcao: "ArrowLeft",
             })
         });
@@ -68,7 +63,7 @@ function observer() {
         client.publish({
             destination: "/app/observer",
             body: JSON.stringify({
-                id: id
+                id: jogador.id
             })
         });
     }, 16)
@@ -92,7 +87,7 @@ function moveJogador() {
             client.publish({
                 destination: "/app/move",
                 body: JSON.stringify({
-                    id: id,
+                    id: jogador.id,
                     direcao: "ArrowUp",
                 })
             });
@@ -120,12 +115,12 @@ async function geraJogador() {
     } catch (error) {
         console.log("Error: " + error);
     }
-    id = dataJogador.id;
+    jogador.id = dataJogador.id;
 }
 
 function desenharJogadoresMultplayer(jogadores) {
-    jogadores.forEach(jogador => {
-        let player = document.getElementById(jogador.id);
+    jogadores.forEach(elJogador => {
+        let player = document.getElementById(elJogador.id);
 
         if (!player) {
             player = document.createElement("div");
@@ -134,16 +129,16 @@ function desenharJogadoresMultplayer(jogadores) {
             game.appendChild(player);
         }
 
-        if (jogador.id === id) {
-            atualizarCamera(jogador);
+        if (elJogador.id === jogador.id) {
+            atualizarCamera(elJogador);
         }
 
-        player.style.transform = `translate(${jogador.x}px, ${jogador.y}px)`;
+        player.style.transform = `translate(${elJogador.x}px, ${elJogador.y}px)`;
     });
 }
 
 function atualizarCamera(jogador) {
-    const MARGIN = 120;
+    const MARGIN = 7 * 40;
 
     const limitLeft = game.getBoundingClientRect().left - tela.getBoundingClientRect().left;
     const limitRight = game.getBoundingClientRect().right - tela.getBoundingClientRect().right;
@@ -174,6 +169,7 @@ function atualizarCamera(jogador) {
 
     game.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
 }
+
 function desenharBlock() {
     const rows = MAPAS.length;
     const cols = MAPAS[0].length;
