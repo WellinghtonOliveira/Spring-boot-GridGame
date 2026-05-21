@@ -141,20 +141,22 @@ function desenharJogadoresMultplayer(jogadores) {
 }
 
 function atualizarCamera(jogador) {
-    const MARGIN = 120;
+    const MARGIN = 0;
 
-    const screenW = window.innerWidth;
-    const screenH = window.innerHeight;
+    const tela = document.getElementById("tela-fundo");
+
+    const screenW = tela.offsetWidth;
+    const screenH = tela.offsetHeight;
 
     const playerScreenX = jogador.x - cameraX;
     const playerScreenY = jogador.y - cameraY;
 
-    if (playerScreenX < 80) { // esquerda
-        cameraX -= (80 - playerScreenX);
+    if (playerScreenX < MARGIN) { // esquerda
+        cameraX -= (MARGIN - playerScreenX);
     }
 
-    if (playerScreenX > screenW - 80) { // direita
-        cameraX += (playerScreenX - (screenW - 80));
+    if (playerScreenX > screenW - MARGIN) { // direita
+        cameraX += (playerScreenX - (screenW - MARGIN));
         console.log(playerScreenX, screenW)
     }
 
@@ -168,7 +170,6 @@ function atualizarCamera(jogador) {
 
     game.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
 }
-
 function desenharBlock() {
     const rows = MAPAS.length;
     const cols = MAPAS[0].length;
