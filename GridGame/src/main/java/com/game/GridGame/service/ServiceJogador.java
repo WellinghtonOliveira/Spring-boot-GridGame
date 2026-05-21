@@ -118,10 +118,8 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() + 1) / 40);
         int yBaixo = (int) ((jogador.getY() + 39) / 40);
 
-        if (x >= 0 &&
-            x < mapaService.obterLargura()) {
-
-            if (direction.equals("direita") &&
+        if (x >= 0) {
+            if (direction.equals("direita") && xDireita < mapaService.obterLargura() &&
                     mapa[yCima][xDireita].equals("vazio") &&
                     mapa[yBaixo][xDireita].equals("vazio")) {
                 return true;

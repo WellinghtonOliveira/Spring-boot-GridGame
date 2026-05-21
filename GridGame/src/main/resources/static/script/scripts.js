@@ -4,6 +4,7 @@ const url = "http://localhost:8080/";
 
 let id = "";
 let grid;
+let tela;
 let game;
 let MAPAS;
 
@@ -20,7 +21,8 @@ const teclas = {
 
 document.addEventListener("DOMContentLoaded", () => {
     game = document.getElementById("game");
-    grid = document.querySelector("#grid");
+    grid = document.getElementById("grid");
+    tela = document.getElementById("tela-fundo");
 
     document.getElementById("game").style.display = "none";
     document.getElementById("button-comecar").addEventListener("click", () => observer());
@@ -141,9 +143,12 @@ function desenharJogadoresMultplayer(jogadores) {
 }
 
 function atualizarCamera(jogador) {
-    const MARGIN = 0;
+    const MARGIN = 120;
 
-    const tela = document.getElementById("tela-fundo");
+    const limitLeft = game.getBoundingClientRect().left - tela.getBoundingClientRect().left;
+    const limitRight = game.getBoundingClientRect().right - tela.getBoundingClientRect().right;
+    const limitUp = game.getBoundingClientRect().up - tela.getBoundingClientRect().up;
+    const limitDown = game.getBoundingClientRect().down - tela.getBoundingClientRect().down;
 
     const screenW = tela.offsetWidth;
     const screenH = tela.offsetHeight;
@@ -152,20 +157,19 @@ function atualizarCamera(jogador) {
     const playerScreenY = jogador.y - cameraY;
 
     if (playerScreenX < MARGIN) { // esquerda
-        cameraX -= (MARGIN - playerScreenX);
+        if (limitLeft < 0) cameraX -= (MARGIN - playerScreenX);
     }
 
     if (playerScreenX > screenW - MARGIN) { // direita
-        cameraX += (playerScreenX - (screenW - MARGIN));
-        console.log(playerScreenX, screenW)
+        if (limitRight > 0) cameraX += (playerScreenX - (screenW - MARGIN));
     }
 
     if (playerScreenY < MARGIN) {
-        cameraY -= (MARGIN - playerScreenY);
+        if (limitUp > 0) cameraY -= (MARGIN - playerScreenY);
     }
 
     if (playerScreenY > screenH - MARGIN) {
-        cameraY += (playerScreenY - (screenH - MARGIN));
+       if (limitDown < 0) cameraY += (playerScreenY - (screenH - MARGIN));
     }
 
     game.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;

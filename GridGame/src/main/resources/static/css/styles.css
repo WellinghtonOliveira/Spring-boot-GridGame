@@ -24,7 +24,8 @@ body {
 
 .tela {
     width: calc(100vw - 60px);
-    height: calc(100vh - 60px);
+    height: calc(600px - 60px);
+    min-height: 600px;
     background: #111317;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
