@@ -1,7 +1,9 @@
 const url = "http://localhost:8080/";
 
-let jogador = {
-    "id": ""
+export let jogador = {
+    "id": "",
+    "nome": "PLAYER",
+    "cor": "whitesmoke",
 }
 
 let grid;
@@ -22,9 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     grid = document.getElementById("grid");
     tela = document.getElementById("tela-fundo");
 
-    document.getElementById("game").style.display = "none";
-    document.getElementById("button-comecar").addEventListener("click", async () => {observer(); await geraJogador(); moveJogador(); loop();});
-
     async function init() {
         await carregarMapas();
         desenharGrid();
@@ -33,6 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     init();
 })
+
+export async function confJogadorInit() {
+    await geraJogador();
+    observer();
+    moveJogador();
+    loop();
+}
 
 function loop() {
     if (teclas['ArrowRight']) {
@@ -109,6 +115,7 @@ function moveJogador() {
 
 async function geraJogador() {
     let dataJogador;
+
     try {
         const input = await fetch(url + "player");
         dataJogador = await input.json();
@@ -118,15 +125,25 @@ async function geraJogador() {
     jogador.id = dataJogador.id;
 }
 
-function desenharJogadoresMultplayer(jogadores) {
+export function desenharJogadoresMultplayer(jogadores) {
     jogadores.forEach(elJogador => {
         let player = document.getElementById(elJogador.id);
+        let boxName;
 
-        if (!player) {
+        if (player == null) {
             player = document.createElement("div");
-            player.id = jogador.id;
+            boxName = document.createElement("p");
+
+            player.id = elJogador.id;
             player.classList.add("player");
+
+            boxName.textContent = `${elJogador.nome}`;
+            boxName.classList.add("playerName");
+
+            player.appendChild(boxName);
             game.appendChild(player);
+        } else {
+            boxName = player.querySelector("p");
         }
 
         if (elJogador.id === jogador.id) {
@@ -164,7 +181,7 @@ function atualizarCamera(jogador) {
     }
 
     if (playerScreenY > screenH - MARGIN) {
-       if (limitDown < 0) cameraY += (playerScreenY - (screenH - MARGIN));
+        if (limitDown < 0) cameraY += (playerScreenY - (screenH - MARGIN));
     }
 
     game.style.transform = `translate(${-cameraX}px, ${-cameraY}px)`;
