@@ -9,7 +9,7 @@ export let jogador = {
 let grid;
 let tela;
 let game;
-let MAPAS;
+let MAPAS; 
 
 let cameraX = 0;
 let cameraY = 0;
