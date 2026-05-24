@@ -34,9 +34,11 @@ function configCor() {
 
 function configName() {
     let nome = document.getElementById("input-text-nome");
-    if (nome && nome.value < 3) {
+    if (nome && nome.value.length < 15) {
         jogador.nome = nome;
         return true;
+    }else {
+        alert("ERRO! Nome invalido");
     }
     return false;
 }
