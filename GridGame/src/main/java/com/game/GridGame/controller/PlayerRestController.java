@@ -1,5 +1,6 @@
 package com.game.GridGame.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,15 @@ public class PlayerRestController {
         this.serviceJogador = serviceJogador;
     }
 
-    @PostMapping("/player")
-    public JogadorEntity obtemJogadorInicial(@RequestBody InfPLayers dados) {
-        System.out.println(dados);
+    @GetMapping("/player")
+    public JogadorEntity obtemJogadorInicial(@RequestBody InfPLayers data) {
+        serviceJogador.updatePlayer(data);
+
         return serviceJogador.criarJogador();
+    }
+
+    @PostMapping("/playerUpdata")
+    public void atualizaPlayer(@RequestBody InfPLayers data) {
+        serviceJogador.updatePlayer(data);
     }
 }
