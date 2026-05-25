@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
+
+import com.game.GridGame.dto.InfPLayers;
 import com.game.GridGame.entity.JogadorEntity;
 
 @Service
@@ -59,11 +61,10 @@ public class ServiceJogador {
     }
 
     public void observerPlayer(String id) {
+        if (id == null) return;
+
         JogadorEntity jogador = jogadores.get(id);
-        
-        if (jogador == null) {
-            return;
-        }
+        if (jogador == null) return;
 
         if (jogador.getY() / 40 >= mapaService.obterAltura() - 1) {
             jogador.setY((mapaService.obterAltura() - 1) * 40);
@@ -195,6 +196,14 @@ public class ServiceJogador {
             jogador.setGravity(jogador.getGravity() + 1);
         }
 
+    }
+
+    public void updatePlayer(InfPLayers data) {
+        if (data.getId() == null) return;
+        JogadorEntity jogador = jogadores.get(data.getId());
+
+        jogador.setNome(data.getNome());
+        jogador.setCor(data.getCor());
     }
 
     public JogadorEntity criarJogador() {
