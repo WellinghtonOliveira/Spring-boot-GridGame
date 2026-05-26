@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import com.game.GridGame.dto.InfPLayers;
-import com.game.GridGame.entity.JogadorEntity;
+import com.game.GridGame.dto.ResponsePlayer;
 import com.game.GridGame.service.ServiceJogador;
 
 @Controller
@@ -26,7 +26,7 @@ public class PlayerSocketController {
 
     @MessageMapping("/observer")
     @SendTo("/topic/player")
-    public Collection<JogadorEntity> observador(InfPLayers infPlayer) {
+    public Collection<ResponsePlayer> observador(InfPLayers infPlayer) {
         serviceJogador.observerPlayer(infPlayer.getId());
         return serviceJogador.getJogadores();
     }
