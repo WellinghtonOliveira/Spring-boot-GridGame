@@ -18,9 +18,7 @@ public class PlayerRestController {
     }
 
     @GetMapping("/player")
-    public JogadorEntity obtemJogadorInicial(@RequestBody InfPLayers data) {
-        serviceJogador.updatePlayer(data);
-
+    public JogadorEntity obtemJogadorInicial() {
         return serviceJogador.criarJogador();
     }
 
