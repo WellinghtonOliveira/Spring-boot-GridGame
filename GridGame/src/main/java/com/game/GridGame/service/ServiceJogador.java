@@ -7,11 +7,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 import com.game.GridGame.dto.InfPLayers;
+import com.game.GridGame.dto.ResponsePlayer;
 import com.game.GridGame.entity.JogadorEntity;
 
 @Service
 public class ServiceJogador {
-    private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>();
+    private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>(); 
     private ServiceMap mapaService;
 
     public ServiceJogador(ServiceMap mapaService) {
@@ -56,13 +57,21 @@ public class ServiceJogador {
         }
     }
 
-    public Collection<JogadorEntity> getJogadores() {
-        return jogadores.values();
+    public Collection<ResponsePlayer> getJogadores() {
+        return jogadores.values()
+            .stream()
+            .map(jogador -> new ResponsePlayer(
+                jogador.getId(),
+                jogador.getNome(),
+                jogador.getCor(),
+                jogador.getX(),
+                jogador.getY()
+            ))
+            .toList();
     }
 
     public void observerPlayer(String id) {
         if (id == null) return;
-
         JogadorEntity jogador = jogadores.get(id);
         if (jogador == null) return;
 
@@ -202,13 +211,28 @@ public class ServiceJogador {
         if (data.getId() == null) return;
         JogadorEntity jogador = jogadores.get(data.getId());
 
-        jogador.setNome(data.getNome());
-        jogador.setCor(data.getCor());
+        String nome = data.getNome();
+        String cor = data.getCor();
+
+        if (nome != null && !nome.isBlank() && nome.length() <= 15) {
+            jogador.setNome(nome);
+        }
+
+        if (cor != null && !cor.isBlank()) {
+            jogador.setCor(cor);
+        }
     }
 
-    public JogadorEntity criarJogador() {
-        JogadorEntity jogador = new JogadorEntity("PLAYER");
+    public ResponsePlayer criarJogador() {
+        JogadorEntity jogador = new JogadorEntity("jogador");
         jogadores.put(jogador.getId(), jogador);
-        return jogador;
+        
+        return new ResponsePlayer(
+            jogador.getId(),
+            jogador.getNome(),
+            jogador.getCor(),
+            jogador.getX(),
+            jogador.getY()
+        );
     }
 }
