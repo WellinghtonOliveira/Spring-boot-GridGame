@@ -34,11 +34,11 @@ function configCor() {
 
 function configName() {
     let nome = document.getElementById("input-text-nome");
-    if (nome && nome.value.length < 15) {
-        jogador.nome = nome;
+    if (nome && nome.value.length <= 15) {
+        jogador.nome = nome.value;
         return true;
     }else {
-        alert("ERRO! Nome invalido");
+        alert("ERRO! Nome invalido\n MAX: 15 caracteres");
     }
     return false;
 }

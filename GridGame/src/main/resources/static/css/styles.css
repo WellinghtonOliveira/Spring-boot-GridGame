@@ -55,8 +55,7 @@ body {
 .player {
     width: 39px;
     height: 39px;
-    background: whitesmoke;
-    border: none;
+    border: 1px solid #ffffffa1;
     position: absolute;
     display: flex;
     justify-content: center;

@@ -3,13 +3,13 @@ const url = "http://localhost:8080/";
 export let jogador = {
     "id": "",
     "nome": "PLAYER",
-    "cor": "whitesmoke",
+    "cor": "#e0e0e0"
 }
 
 let grid;
 let tela;
 let game;
-let MAPAS; 
+let MAPAS;
 
 let cameraX = 0;
 let cameraY = 0;
@@ -117,26 +117,37 @@ async function geraJogador() {
     let dataJogador;
 
     try {
-        const input = await fetch(url + "player");
-        dataJogador = await input.json();
+        const inputId = await fetch(url + "player");
+        dataJogador = await inputId.json();
+        jogador.id = dataJogador.id;
+
+        const inputDados = await fetch(url + "playerUpdata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(jogador)
+        });
+        
     } catch (error) {
         console.log("Error: " + error);
     }
-    jogador.id = dataJogador.id;
 }
 
 export function desenharJogadoresMultplayer(jogadores) {
+
     jogadores.forEach(elJogador => {
-        let player = document.getElementById(elJogador.id);
+        let player = document.getElementById(elJogador.nome);
         let boxName;
 
         if (player == null) {
             player = document.createElement("div");
             boxName = document.createElement("p");
-
-            player.id = elJogador.id;
+            
+            player.id = elJogador.nome;
             player.classList.add("player");
-
+            player.style.background = `${elJogador.cor}`
+            
             boxName.textContent = `${elJogador.nome}`;
             boxName.classList.add("playerName");
 
@@ -146,7 +157,8 @@ export function desenharJogadoresMultplayer(jogadores) {
             boxName = player.querySelector("p");
         }
 
-        if (elJogador.id === jogador.id) {
+        if (elJogador.nome === jogador.nome) {
+            player.style.zIndex = "11";
             atualizarCamera(elJogador);
         }
 
