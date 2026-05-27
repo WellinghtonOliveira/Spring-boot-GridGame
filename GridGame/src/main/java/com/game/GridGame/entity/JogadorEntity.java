@@ -32,7 +32,7 @@ public class JogadorEntity {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
         this.vida = 3;
-        this.cor = "#002366";
+        this.cor = "#e0e0e0";
         this.x = 0;
         this.y = 0;
         this.velocityX = 1.5;
