@@ -5,10 +5,15 @@ public class ResponsePlayer {
     String nome;
     String cor;
 
-    public ResponsePlayer(String id, String nome, String cor) {
+    double x;
+    double y;
+
+    public ResponsePlayer(String id, String nome, String cor, double x, double y) {
         this.id = id;
         this.nome = nome;
         this.cor = cor;
+        this.x = x;
+        this.y = y;
     }
 
     public void setId(String id) {
@@ -23,6 +28,14 @@ public class ResponsePlayer {
         this.cor = cor;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public String getId() {
         return id;
     }
@@ -33,5 +46,13 @@ public class ResponsePlayer {
 
     public String getCor() {
         return cor;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }
