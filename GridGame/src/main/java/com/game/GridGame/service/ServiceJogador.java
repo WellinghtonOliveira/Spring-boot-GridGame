@@ -228,7 +228,7 @@ public class ServiceJogador {
 
         return new ResponsePlayer(
             jogador.getId(),
-            jogador.getX(),
+            jogador.getX(), 
             jogador.getY()
         );
     }
