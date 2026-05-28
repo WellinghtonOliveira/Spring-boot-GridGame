@@ -86,7 +86,7 @@ public class JogadorEntity {
         return id;
     }
 
-    public String getNome() {
+    public String getNome() { 
         return nome;
     }
 
