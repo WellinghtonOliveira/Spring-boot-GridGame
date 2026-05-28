@@ -94,7 +94,7 @@ public class JogadorEntity {
         return vida;
     }
 
-    public String getCor() {
+    public String getCor() { 
         return cor;
     }
 
