@@ -1,5 +1,8 @@
 package com.game.GridGame.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponsePlayer {
     String id;
     String nome;
@@ -8,8 +11,13 @@ public class ResponsePlayer {
     double x;
     double y;
 
-    public ResponsePlayer(String id, String nome, String cor, double x, double y) {
+    public ResponsePlayer(String id, double x, double y) {
         this.id = id;
+        this.x = x;
+        this.y = y;
+    }
+
+    public ResponsePlayer(String nome, String cor, double x, double y) {
         this.nome = nome;
         this.cor = cor;
         this.x = x;

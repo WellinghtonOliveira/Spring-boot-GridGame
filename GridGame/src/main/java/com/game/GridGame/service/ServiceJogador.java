@@ -61,7 +61,6 @@ public class ServiceJogador {
         return jogadores.values()
             .stream()
             .map(jogador -> new ResponsePlayer(
-                jogador.getId(),
                 jogador.getNome(),
                 jogador.getCor(),
                 jogador.getX(),
@@ -226,13 +225,14 @@ public class ServiceJogador {
     public ResponsePlayer criarJogador() {
         JogadorEntity jogador = new JogadorEntity("jogador");
         jogadores.put(jogador.getId(), jogador);
-        
+
         return new ResponsePlayer(
             jogador.getId(),
-            jogador.getNome(),
-            jogador.getCor(),
             jogador.getX(),
             jogador.getY()
         );
     }
 }
+
+// TODO nome de jogadores iguais
+// quando nao colocado nome por padrao ficaria "jogador", tenho que mudar isso para que cada nome fique diferente um dos outros para que nao de erro quando instancialo no front

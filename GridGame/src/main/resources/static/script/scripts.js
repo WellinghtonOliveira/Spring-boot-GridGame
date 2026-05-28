@@ -117,7 +117,7 @@ async function geraJogador() {
     let dataJogador;
 
     try {
-        const inputId = await fetch(url + "player");
+        const inputId = await fetch(url + "player", { method: "GET" });
         dataJogador = await inputId.json();
         jogador.id = dataJogador.id;
 
