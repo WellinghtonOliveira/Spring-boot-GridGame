@@ -35,9 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 export async function confJogadorInit() {
     await geraJogador();
-    observer();
-    moveJogador();
-    loop();
+    if (window.jogadorOn) {
+        observer();
+        moveJogador();
+        loop();
+    }
 }
 
 function loop() {
@@ -128,7 +130,10 @@ async function geraJogador() {
             },
             body: JSON.stringify(jogador)
         });
-        
+
+        if (inputDados.ok) {
+            window.jogadorOn = true;
+        }
     } catch (error) {
         console.log("Error: " + error);
     }
@@ -143,11 +148,11 @@ export function desenharJogadoresMultplayer(jogadores) {
         if (player == null) {
             player = document.createElement("div");
             boxName = document.createElement("p");
-            
+
             player.id = elJogador.nome;
             player.classList.add("player");
             player.style.background = `${elJogador.cor}`
-            
+
             boxName.textContent = `${elJogador.nome}`;
             boxName.classList.add("playerName");
 
