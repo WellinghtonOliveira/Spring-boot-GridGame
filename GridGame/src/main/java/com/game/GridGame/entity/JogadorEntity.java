@@ -27,6 +27,7 @@ public class JogadorEntity {
 
     private boolean empuxo;
     private boolean pulo;
+    private boolean pass;
 
     public JogadorEntity(String nome) {
         this.id = UUID.randomUUID().toString();
@@ -40,6 +41,7 @@ public class JogadorEntity {
         this.quantiaPulo = 20; // TETO
         this.pulo = false;
         this.empuxo = true;
+        this.pass = false;
     }
 
     public void setNome(String nome) {
@@ -80,6 +82,10 @@ public class JogadorEntity {
 
     public void setEmpuxo(boolean empuxo) {
         this.empuxo = empuxo;
+    }
+
+    public void setPass(boolean pass) {
+        this.pass = pass;
     }
 
     public String getId() {
@@ -124,5 +130,9 @@ public class JogadorEntity {
 
     public boolean getEmpuxo() {
         return empuxo;
+    }
+
+    public boolean getPass() {
+        return pass;
     }
 }
