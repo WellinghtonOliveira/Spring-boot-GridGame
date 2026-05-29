@@ -140,7 +140,6 @@ async function geraJogador() {
 }
 
 export function desenharJogadoresMultplayer(jogadores) {
-
     jogadores.forEach(elJogador => {
         let player = document.getElementById(elJogador.nome);
         let boxName;
@@ -161,7 +160,7 @@ export function desenharJogadoresMultplayer(jogadores) {
         } else {
             boxName = player.querySelector("p");
         }
-
+        
         if (elJogador.nome === jogador.nome) {
             player.style.zIndex = "11";
             atualizarCamera(elJogador);
