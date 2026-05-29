@@ -1,5 +1,6 @@
 package com.game.GridGame.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ public class PlayerRestController {
     }
 
     @PostMapping("/playerUpdata")
-    public void atualizaPlayer(@RequestBody InfPLayers data) {
-        serviceJogador.updatePlayer(data);
+    public ResponseEntity<String> atualizaPlayer(@RequestBody InfPLayers data) {
+        return serviceJogador.updatePlayer(data);
     }
 }
