@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.game.GridGame.dto.InfPLayers;
@@ -177,6 +178,16 @@ public class ServiceJogador {
         return false;
     }
 
+    public Boolean findNamePlayers(String id, String nome) {
+        for (JogadorEntity j : jogadores.values()) {
+            if (j.getNome().equals(nome)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void observerCanJump(JogadorEntity jogador) {
         if (jogador.getPulo()) {
             if (jogador.getQuantiaPulo() > 0) {
@@ -206,24 +217,38 @@ public class ServiceJogador {
 
     }
 
-    public void updatePlayer(InfPLayers data) {
-        if (data.getId() == null) return;
+    public void deletePlayer(String id) {
+        for (JogadorEntity j : jogadores.values()) {
+            if (j.getId().equals(id)) jogadores.remove(id);
+        }
+    }
+
+    public ResponseEntity<String> updatePlayer(InfPLayers data) {
+        if (data.getId() == null) return ResponseEntity.status(404).build();
         JogadorEntity jogador = jogadores.get(data.getId());
 
         String nome = data.getNome();
         String cor = data.getCor();
 
+        if (findNamePlayers(data.getId(), nome)) {
+            deletePlayer(data.getId());
+            return ResponseEntity.status(404).body("Nome de usuario em uso");
+        }
+        
         if (nome != null && !nome.isBlank() && nome.length() <= 15) {
             jogador.setNome(nome);
         }
-
+        
         if (cor != null && !cor.isBlank()) {
             jogador.setCor(cor);
         }
+        
+
+        return ResponseEntity.status(200).body("Sucesso!");
     }
 
     public ResponsePlayer criarJogador() {
-        JogadorEntity jogador = new JogadorEntity("jogador");
+        JogadorEntity jogador = new JogadorEntity("jogador " + (jogadores.size() + 1));
         jogadores.put(jogador.getId(), jogador);
 
         return new ResponsePlayer(
@@ -233,6 +258,3 @@ public class ServiceJogador {
         );
     }
 }
-
-// TODO nome de jogadores iguais
-// quando nao colocado nome por padrao ficaria "jogador", tenho que mudar isso para que cada nome fique diferente um dos outros para que nao de erro quando instancialo no front
