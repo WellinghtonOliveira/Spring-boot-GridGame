@@ -60,14 +60,15 @@ public class ServiceJogador {
 
     public Collection<ResponsePlayer> getJogadores() {
         return jogadores.values()
-            .stream()
-            .map(jogador -> new ResponsePlayer(
-                jogador.getNome(),
-                jogador.getCor(),
-                jogador.getX(),
-                jogador.getY()
-            ))
-            .toList();
+        .stream()
+        .filter(jogador -> jogador.getPass())
+        .map(jogador -> new ResponsePlayer(
+            jogador.getNome(),
+            jogador.getCor(),
+            jogador.getX(),
+            jogador.getY()
+        ))
+        .toList();
     }
 
     public void observerPlayer(String id) {
@@ -234,6 +235,8 @@ public class ServiceJogador {
             deletePlayer(data.getId());
             return ResponseEntity.status(404).body("Nome de usuario em uso");
         }
+
+        jogador.setPass(true);
         
         if (nome != null && !nome.isBlank() && nome.length() <= 15) {
             jogador.setNome(nome);
