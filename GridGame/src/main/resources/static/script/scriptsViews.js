@@ -12,12 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (configName() && configCor()) {
             await confJogadorInit();
 
-            const containerEscolhas = document.getElementById("container-criacao");
-            const game = document.getElementById("game");
+            if (window.jogadorOn) {
+                const containerEscolhas = document.getElementById("container-criacao");
+                const game = document.getElementById("game");
 
-            containerEscolhas.style.display = "none";
-            game.style.display = "grid";
-            window.jogadorOn = true;
+                containerEscolhas.style.display = "none";
+                game.style.display = "grid";
+            }
         }
     })
 
@@ -37,7 +38,7 @@ function configName() {
     if (nome && nome.value.length <= 15) {
         jogador.nome = nome.value;
         return true;
-    }else {
+    } else {
         alert("ERRO! Nome invalido\n MAX: 15 caracteres");
     }
     return false;
