@@ -24,6 +24,11 @@ public class PlayerSocketController {
         serviceJogador.moverJogador(infPlayer.getId(), infPlayer.getDirecao());
     }
 
+    @MessageMapping("/ping")
+    public void verificarPlayerOff(InfPLayers infPLayers) {
+
+    }
+
     @MessageMapping("/observer")
     @SendTo("/topic/player")
     public Collection<ResponsePlayer> observador(InfPLayers infPlayer) {
