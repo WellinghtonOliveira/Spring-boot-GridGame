@@ -224,6 +224,18 @@ public class ServiceJogador {
         }
     }
 
+    public void verificarPlayerOff() {
+        long agora = System.currentTimeMillis();
+
+        for (JogadorEntity j : jogadores.values()) {
+            if (agora - j.getUltimoPing() > 15000) {
+                deletePlayer(j.getId());
+            }else {
+                j.setUltimoPing(System.currentTimeMillis());
+            }
+        }
+    }
+
     public ResponseEntity<String> updatePlayer(InfPLayers data) {
         if (data.getId() == null) return ResponseEntity.status(404).build();
         JogadorEntity jogador = jogadores.get(data.getId());
