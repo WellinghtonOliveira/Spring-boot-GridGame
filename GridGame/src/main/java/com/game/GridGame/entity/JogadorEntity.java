@@ -13,17 +13,18 @@ public class JogadorEntity {
     @Id
     private String id;
     private String nome;
-    private int vida;
     private String cor;
-
+    
     private double x;
     private double y;
-
+    
     private double velocityX;
-
     private double gravity;
-
+    
+    private int vida;
     private int quantiaPulo;
+
+    private long ultimoPing;
 
     private boolean empuxo;
     private boolean pulo;
@@ -88,6 +89,10 @@ public class JogadorEntity {
         this.pass = pass;
     }
 
+    public void setUltimoPing(long ultimoPing) {
+        this.ultimoPing = ultimoPing;
+    }
+
     public String getId() {
         return id;
     }
@@ -134,5 +139,9 @@ public class JogadorEntity {
 
     public boolean getPass() {
         return pass;
+    }
+
+    public long getUltimoPing() {
+        return ultimoPing;
     }
 }
