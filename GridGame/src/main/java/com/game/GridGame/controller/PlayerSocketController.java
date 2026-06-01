@@ -25,8 +25,8 @@ public class PlayerSocketController {
     }
 
     @MessageMapping("/ping")
-    public void verificarPlayerOff(InfPLayers infPLayers) {
-
+    public void verificarPlayerOff() {
+        serviceJogador.verificarPlayerOff();
     }
 
     @MessageMapping("/observer")
