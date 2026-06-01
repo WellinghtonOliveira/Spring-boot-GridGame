@@ -39,7 +39,14 @@ export async function confJogadorInit() {
         observer();
         moveJogador();
         loop();
+        isPlayerOff()
     }
+}
+
+function isPlayerOff() {
+    setInterval(() => {
+        client.publish({ destination: "/app/ping" });
+    }, 5000)
 }
 
 function loop() {
@@ -160,7 +167,7 @@ export function desenharJogadoresMultplayer(jogadores) {
         } else {
             boxName = player.querySelector("p");
         }
-        
+
         if (elJogador.nome === jogador.nome) {
             player.style.zIndex = "11";
             atualizarCamera(elJogador);
