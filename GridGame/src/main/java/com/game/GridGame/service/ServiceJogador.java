@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.game.GridGame.dto.InfPLayers;
@@ -13,7 +14,8 @@ import com.game.GridGame.entity.JogadorEntity;
 
 @Service
 public class ServiceJogador {
-    private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>(); 
+    private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>();
+    private int countReqs = 1;
     private ServiceMap mapaService;
 
     public ServiceJogador(ServiceMap mapaService) {
@@ -224,15 +226,23 @@ public class ServiceJogador {
         }
     }
 
+    @Scheduled(fixedRate = 5000)
     public void verificarPlayerOff() {
         long agora = System.currentTimeMillis();
-
+        
         for (JogadorEntity j : jogadores.values()) {
             if (agora - j.getUltimoPing() > 15000) {
                 deletePlayer(j.getId());
-            }else {
-                j.setUltimoPing(System.currentTimeMillis());
+                System.out.println("Deletado " + j.getNome());
             }
+        }
+    }
+
+    public void atualizaUltimoPing(String id) {
+        JogadorEntity jogador = jogadores.get(id);
+
+        if (jogador != null) {
+            jogador.setUltimoPing(System.currentTimeMillis());
         }
     }
 
@@ -263,8 +273,10 @@ public class ServiceJogador {
     }
 
     public ResponsePlayer criarJogador() {
-        JogadorEntity jogador = new JogadorEntity("jogador " + (jogadores.size() + 1));
+        JogadorEntity jogador = new JogadorEntity("jogador " + countReqs++);
         jogadores.put(jogador.getId(), jogador);
+
+        jogador.setUltimoPing(System.currentTimeMillis());
 
         return new ResponsePlayer(
             jogador.getId(),
