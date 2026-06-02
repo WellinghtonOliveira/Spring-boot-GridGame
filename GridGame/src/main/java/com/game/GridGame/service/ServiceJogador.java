@@ -233,7 +233,7 @@ public class ServiceJogador {
         for (JogadorEntity j : jogadores.values()) {
             if (agora - j.getUltimoPing() > 15000) {
                 deletePlayer(j.getId());
-                System.out.println("Deletado " + j.getNome());
+                System.out.println("Jogador " + j.getNome() + "- Deletado");
             }
         }
     }

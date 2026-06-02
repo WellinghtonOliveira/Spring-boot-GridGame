@@ -45,8 +45,13 @@ export async function confJogadorInit() {
 
 function isPlayerOff() {
     setInterval(() => {
-        client.publish({ destination: "/app/ping" });
-    }, 5000)
+        client.publish({
+            destination: "/app/ping",
+            body: JSON.stringify({
+                id: jogador.id
+            })
+        });
+    }, 2000)
 }
 
 function loop() {
@@ -147,9 +152,14 @@ async function geraJogador() {
 }
 
 export function desenharJogadoresMultplayer(jogadores) {
+
+    const jogadoresAtivos = new Set();
+
     jogadores.forEach(elJogador => {
         let player = document.getElementById(elJogador.nome);
         let boxName;
+
+        jogadoresAtivos.add(elJogador.nome);
 
         if (player == null) {
             player = document.createElement("div");
@@ -174,6 +184,19 @@ export function desenharJogadoresMultplayer(jogadores) {
         }
 
         player.style.transform = `translate(${elJogador.x}px, ${elJogador.y}px)`;
+    });
+
+    apagaJogadorOffline(jogadoresAtivos);
+}
+
+
+function apagaJogadorOffline(jogadoresAtivos) {
+    const jogadores = document.querySelectorAll(".player") || null;
+
+    document.querySelectorAll(".player").forEach(player => {
+        if (!jogadoresAtivos.has(player.id)) {
+            player.remove();
+        }
     });
 }
 
