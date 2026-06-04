@@ -144,6 +144,7 @@ async function geraJogador() {
         });
 
         if (inputDados.ok) {
+            jogador.nome = await inputDados.text();
             window.jogadorOn = true;
         }
     } catch (error) {
@@ -188,7 +189,6 @@ export function desenharJogadoresMultplayer(jogadores) {
 
     apagaJogadorOffline(jogadoresAtivos);
 }
-
 
 function apagaJogadorOffline(jogadoresAtivos) {
     const jogadores = document.querySelectorAll(".player") || null;
@@ -289,3 +289,6 @@ async function carregarMapas() {
         console.log("Erro: " + error);
     }
 }
+
+// TODO o restart após o jogador sair
+// TODO o checkpoint após o jogador morrer 
