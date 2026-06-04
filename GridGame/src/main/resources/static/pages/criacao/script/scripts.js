@@ -5,7 +5,8 @@ let cols;
 
 // Blocos existentes
 const blocos = {
-    "chao": "#664300"
+    "chao": "#664300",
+    "spawn": "#acc95f"
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,6 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 async function copyMapa() {
+
+    verificardorSpawn();
+
     const matriz = obterMatrizMapa();
 
     const linhasFormatadas = matriz.map(linha => {
@@ -36,6 +40,20 @@ async function copyMapa() {
     } catch (error) {
         console.error("Erro ao copiar:", error);
     }
+}
+
+function verificardorSpawn() {
+    const container = document.getElementById("grid-container");
+    const cells = container.querySelectorAll("div");
+
+    let countSpawn = 0;
+
+    cells.forEach((cell) => {
+        if (cell.getAttribute("name") == "spawn") countSpawn++;
+    })
+
+    if (countSpawn === 1) return true;
+    return false;
 }
 
 function obterMatrizMapa() {
