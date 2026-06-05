@@ -52,6 +52,7 @@ function verificardorSpawn() {
         if (cell.getAttribute("name") == "spawn") countSpawn++;
     })
 
+    
     if (countSpawn === 1) return true;
     return false;
 }
