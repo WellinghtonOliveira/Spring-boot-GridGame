@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import java.awt.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -233,7 +234,7 @@ public class ServiceJogador {
         for (JogadorEntity j : jogadores.values()) {
             if (agora - j.getUltimoPing() > 15000) {
                 deletePlayer(j.getId());
-                System.out.println("Jogador " + j.getNome() + "  ---  Deletado");
+                System.out.println("Jogador: " + j.getNome() + "  ---  Deletado");
             }
         }
     }
@@ -277,6 +278,24 @@ public class ServiceJogador {
         jogadores.put(jogador.getId(), jogador);
 
         jogador.setUltimoPing(System.currentTimeMillis());
+
+        Point coordenadas = mapaService.posRespawnMap();
+
+        if (coordenadas != null) {
+            double spawnX = coordenadas.x;
+            double spawnY = coordenadas.y;
+
+            jogador.setX(spawnX * 40);
+            jogador.setY(spawnY * 40);
+        }else {
+            Point spawnVazioProximo = mapaService.posRespawnMap();
+
+            double spawnX = spawnVazioProximo.x;
+            double spawnY = spawnVazioProximo.y;
+
+            jogador.setX(spawnX * 40);
+            jogador.setY(spawnY * 40);
+        }
 
         return new ResponsePlayer(
             jogador.getId(),
