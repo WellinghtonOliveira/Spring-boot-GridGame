@@ -288,7 +288,7 @@ public class ServiceJogador {
             jogador.setX(spawnX * 40);
             jogador.setY(spawnY * 40);
         }else {
-            Point spawnVazioProximo = mapaService.posRespawnMap();
+            Point spawnVazioProximo = mapaService.posVazioMap();
 
             double spawnX = spawnVazioProximo.x;
             double spawnY = spawnVazioProximo.y;

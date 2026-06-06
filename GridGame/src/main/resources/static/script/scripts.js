@@ -143,7 +143,7 @@ async function geraJogador() {
             body: JSON.stringify(jogador)
         });
 
-        if (inputDados.ok) {
+        if (inputDados.ok && inputId.ok) {
             jogador.nome = await inputDados.text();
             window.jogadorOn = true;
         }
