@@ -23,7 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function copyMapa() {
 
-    verificardorSpawn();
+    if (!verificardorSpawn()) {
+        alert("Erro! Pode haver apenas um spawn");
+        return;
+    }
 
     const matriz = obterMatrizMapa();
 
