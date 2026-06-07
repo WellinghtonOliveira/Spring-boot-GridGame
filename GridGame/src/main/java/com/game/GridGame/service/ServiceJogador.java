@@ -99,7 +99,7 @@ public class ServiceJogador {
     }
 
     public Boolean colisaoPosPuloFoot(JogadorEntity jogador) {
-        String[][] mapa = mapaService.obterMapa(null);
+        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
         int x = (int) jogador.getX() / 40;
         int y = (int) (jogador.getY() / 40);
@@ -122,7 +122,7 @@ public class ServiceJogador {
     }
 
     public Boolean observerColisionDirections(String direction, JogadorEntity jogador) {
-        String[][] mapa = mapaService.obterMapa(null);
+        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
         int x = (int) (jogador.getX() / 40);
 
@@ -134,12 +134,12 @@ public class ServiceJogador {
 
         if (x >= 0) {
             if (direction.equals("direita") && xDireita < mapaService.obterLargura() &&
-                    mapa[yCima][xDireita].equals("vazio") &&
-                    mapa[yBaixo][xDireita].equals("vazio")) {
+                    mapa[yCima][xDireita].equals("vazio") || mapa[yCima][xDireita].equals("spawn") &&
+                    mapa[yBaixo][xDireita].equals("vazio") || mapa[yBaixo][xDireita].equals("spawn")) {
                 return true;
             } else if (direction.equals("esquerda") &&
-                    mapa[yCima][xEsquerda].equals("vazio") &&
-                    mapa[yBaixo][xEsquerda].equals("vazio")) {
+                    mapa[yCima][xEsquerda].equals("vazio") || mapa[yCima][xEsquerda].equals("spawn") &&
+                    mapa[yBaixo][xEsquerda].equals("vazio") || mapa[yBaixo][xEsquerda].equals("spawn")) {
                 return true;
             }
         }
@@ -147,15 +147,15 @@ public class ServiceJogador {
     }
 
     public Boolean observerColisionHead(JogadorEntity jogador) {
-        String[][] mapa = mapaService.obterMapa(null);
+        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
         int xEsquerda = (int) ((jogador.getX() + 1) / 40);
         int xDireita = (int) ((jogador.getX() + 39) / 40);
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) {
-            if (mapa[yCima][xEsquerda].equals("vazio") &&
-                    mapa[yCima][xDireita].equals("vazio")) {
+            if (mapa[yCima][xEsquerda].equals("vazio") || mapa[yCima][xEsquerda].equals("spawn") &&
+                mapa[yCima][xDireita].equals("vazio") || mapa[yCima][xDireita].equals("spawn")) {
                 return true;
             }
         }
@@ -163,7 +163,7 @@ public class ServiceJogador {
     }
 
     public Boolean observerColisionFoot(JogadorEntity jogador) {
-        String[][] mapa = mapaService.obterMapa(null);
+        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
         int x = (int) jogador.getX() / 40;
 
