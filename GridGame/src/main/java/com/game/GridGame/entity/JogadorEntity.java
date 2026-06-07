@@ -8,20 +8,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-@JsonPropertyOrder({"id", "nome", "vida", "cor", "x", "y", "velocityX", "gravity", "quantiaPulo", "empuxo", "pulo"})
+@JsonPropertyOrder({ "id", "nome", "vida", "cor", "x", "y", "velocityX", "gravity", "quantiaPulo", "empuxo", "pulo" })
 public class JogadorEntity {
     @Id
     private String id;
     private String nome;
     private String cor;
-    
+
     private double x;
     private double y;
-    
+
     private double velocityX;
     private double gravity;
-    
+
     private int vida;
+    private int idMapa;
     private int quantiaPulo;
 
     private long ultimoPing;
@@ -43,6 +44,7 @@ public class JogadorEntity {
         this.pulo = false;
         this.empuxo = true;
         this.pass = false;
+        this.idMapa = 0;
     }
 
     public void setNome(String nome) {
@@ -93,11 +95,15 @@ public class JogadorEntity {
         this.ultimoPing = ultimoPing;
     }
 
+    public void setIdMapa(int idMapa) {
+        this.idMapa = idMapa;
+    }
+
     public String getId() {
         return id;
     }
 
-    public String getNome() { 
+    public String getNome() {
         return nome;
     }
 
@@ -105,7 +111,7 @@ public class JogadorEntity {
         return vida;
     }
 
-    public String getCor() { 
+    public String getCor() {
         return cor;
     }
 
@@ -143,5 +149,9 @@ public class JogadorEntity {
 
     public long getUltimoPing() {
         return ultimoPing;
+    }
+
+    public int getIdMapa() {
+        return idMapa;  
     }
 }
