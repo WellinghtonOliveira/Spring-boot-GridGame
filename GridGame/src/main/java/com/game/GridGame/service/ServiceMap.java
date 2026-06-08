@@ -13,29 +13,90 @@ public class ServiceMap {
 
     public ServiceMap() {
         String[][] mapaPadrao = {
-            {"chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "chao", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "chao", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "chao", "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "chao", "vazio", "chao", "vazio", "vazio", "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "spawn", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"},
-            {"chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio"}
+                { "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "chao", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "chao", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "chao", "chao", "vazio", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "chao", "vazio", "chao", "vazio", "vazio", "chao", "vazio", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "chao", "chao", "chao", "chao", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "vazio", "chao", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "spawn", "chao",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" },
+                { "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "chao", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio",
+                        "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio", "vazio" }
         };
         mapas.put(0, mapaPadrao);
     }
 
     public String[][] obterMapa(Integer id) {
-        if (id == null) id = 0;
+        if (id == null)
+            id = 0;
         String[][] copiaMapa = new String[mapas.get(id).length][];
-        
+
         for (int i = 0; i < mapas.get(id).length; i++) {
             copiaMapa[i] = mapas.get(id)[i].clone();
         }
@@ -50,8 +111,17 @@ public class ServiceMap {
         return copiaMapa;
     }
 
+    public Map<Integer, String[][]> obtemTodosMapas() {
+        return mapas;
+    }
+
     public Integer obterAltura(Integer id) {
-        return mapas.get(id).length;
+        System.out.println("ServiceMap obter: " + System.identityHashCode(this));
+        System.out.println("Chaves disponíveis: " + mapas.keySet());
+        System.out.println("ID recebido: " + id);
+
+        String[][] mapa = mapas.get(id);
+        return mapa.length;
     }
 
     public Integer obterLargura(Integer id) {
@@ -76,13 +146,17 @@ public class ServiceMap {
                     return new Point(x, y);
                 }
             }
-        }   
+        }
         return null;
     }
 
     public void salvarMapas(String[][] mapaRecebido) {
+        System.out.println("ServiceMap salvar: " + System.identityHashCode(this));
+
         mapas.put(countIds, mapaRecebido);
-        System.out.println("Mapa guardado com sucesso!");
+
+        System.out.println("Chaves disponíveis: " + mapas.keySet());
+
         countIds++;
     }
 }
