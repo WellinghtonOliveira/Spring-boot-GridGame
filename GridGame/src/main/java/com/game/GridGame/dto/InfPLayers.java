@@ -6,7 +6,17 @@ public class InfPLayers {
     private String cor;
     private String direcao;
 
+    private int idMapa;
+
     public InfPLayers() {}
+
+    public void setIdMapa(int idMapa) {
+        this.idMapa = idMapa;
+    }
+
+    public Integer getIdMapa() {
+        return idMapa;
+    }
 
     public String getId() {
         return id;
