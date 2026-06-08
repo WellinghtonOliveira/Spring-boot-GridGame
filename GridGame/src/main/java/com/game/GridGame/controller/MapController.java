@@ -16,8 +16,7 @@ public class MapController {
     private ServiceMap serviceMaps = new ServiceMap();
 
     @GetMapping("/{idMapa}")
-    public String[][] obtemMaps(@PathVariable Integer idMapa) {
-        System.out.println(idMapa);
+    public String[][] obtemMap(@PathVariable Integer idMapa) {
         return serviceMaps.obterMapa(idMapa);
     }
 
