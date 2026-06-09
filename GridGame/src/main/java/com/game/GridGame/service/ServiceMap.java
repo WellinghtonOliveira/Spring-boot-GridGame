@@ -93,8 +93,7 @@ public class ServiceMap {
     }
 
     public String[][] obterMapa(Integer id) {
-        if (id == null)
-            id = 0;
+        if (id == null) id = 0;
         String[][] copiaMapa = new String[mapas.get(id).length][];
 
         for (int i = 0; i < mapas.get(id).length; i++) {
@@ -116,12 +115,8 @@ public class ServiceMap {
     }
 
     public Integer obterAltura(Integer id) {
-        System.out.println("ServiceMap obter: " + System.identityHashCode(this));
-        System.out.println("Chaves disponíveis: " + mapas.keySet());
-        System.out.println("ID recebido: " + id);
-
         String[][] mapa = mapas.get(id);
-        return mapa.length;
+        return mapa.length;     
     }
 
     public Integer obterLargura(Integer id) {
@@ -151,12 +146,7 @@ public class ServiceMap {
     }
 
     public void salvarMapas(String[][] mapaRecebido) {
-        System.out.println("ServiceMap salvar: " + System.identityHashCode(this));
-
         mapas.put(countIds, mapaRecebido);
-
-        System.out.println("Chaves disponíveis: " + mapas.keySet());
-
         countIds++;
     }
 }
