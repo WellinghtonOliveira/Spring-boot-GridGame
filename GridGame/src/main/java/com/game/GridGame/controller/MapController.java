@@ -15,7 +15,11 @@ import com.game.GridGame.service.ServiceMap;
 @RestController
 @RequestMapping("/maps")
 public class MapController {
-    private ServiceMap serviceMaps = new ServiceMap();
+    private ServiceMap serviceMaps;
+
+    public MapController(ServiceMap serviceMaps) {
+        this.serviceMaps = serviceMaps;
+    }
 
     @GetMapping
     public ResponseEntity<Map<Integer, String[][]>> obtemTodosMapas() {
