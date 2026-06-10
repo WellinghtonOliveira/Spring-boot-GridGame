@@ -11,10 +11,8 @@ public class ResponsePlayer {
     double x;
     double y;
 
-    public ResponsePlayer(String id, double x, double y) {
+    public ResponsePlayer(String id) {
         this.id = id;
-        this.x = x;
-        this.y = y;
     }
 
     public ResponsePlayer(String nome, String cor, double x, double y) {

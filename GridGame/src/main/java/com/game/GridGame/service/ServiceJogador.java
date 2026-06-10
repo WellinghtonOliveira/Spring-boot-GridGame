@@ -16,7 +16,7 @@ import com.game.GridGame.entity.JogadorEntity;
 @Service
 public class ServiceJogador {
     private final Map<String, JogadorEntity> jogadores = new ConcurrentHashMap<>();
-    
+
     private ServiceMap mapaService;
 
     private int countReqs = 1;
@@ -28,13 +28,15 @@ public class ServiceJogador {
     public void moverJogador(String id, String direcao) {
         JogadorEntity jogador = jogadores.get(id);
 
-        if (jogador == null) return;
+        if (jogador == null)
+            return;
 
         double velocity = jogador.getVelocityX();
 
         switch (direcao) {
             case "ArrowRight":
-                if (((jogador.getX() + 40) / 40) > mapaService.obterLargura(jogador.getIdMapa()) + 1) return;
+                if (((jogador.getX() + 40) / 40) > mapaService.obterLargura(jogador.getIdMapa()) + 1)
+                    return;
                 if (observerColisionDirections("direita", jogador)) {
                     jogador.setX(jogador.getX() + velocity);
                 } else {
@@ -44,7 +46,8 @@ public class ServiceJogador {
 
                 break;
             case "ArrowLeft":
-                if (((jogador.getX() - 1) / 40) < 0) return;
+                if (((jogador.getX() - 1) / 40) < 0)
+                    return;
                 if (observerColisionDirections("esquerda", jogador)) {
                     jogador.setX(jogador.getX() - velocity);
                 } else {
@@ -65,21 +68,22 @@ public class ServiceJogador {
 
     public Collection<ResponsePlayer> getJogadores() {
         return jogadores.values()
-        .stream()
-        .filter(jogador -> jogador.getPass())
-        .map(jogador -> new ResponsePlayer(
-            jogador.getNome(),
-            jogador.getCor(),
-            jogador.getX(),
-            jogador.getY()
-        ))
-        .toList();
+                .stream()
+                .filter(jogador -> jogador.getPass())
+                .map(jogador -> new ResponsePlayer(
+                        jogador.getNome(),
+                        jogador.getCor(),
+                        jogador.getX(),
+                        jogador.getY()))
+                .toList();
     }
 
     public void observerPlayer(String id) {
-        if (id == null) return;
+        if (id == null)
+            return;
         JogadorEntity jogador = jogadores.get(id);
-        if (jogador == null) return;
+        if (jogador == null)
+            return;
 
         if (jogador.getY() / 40 >= mapaService.obterAltura(jogador.getIdMapa()) - 1) {
             jogador.setY((mapaService.obterAltura(jogador.getIdMapa()) - 1) * 40);
@@ -87,7 +91,7 @@ public class ServiceJogador {
 
         observerCanJump(jogador);
         boolean noChao = observerColisionFoot(jogador);
-        
+
         if (!noChao && jogador.getEmpuxo()) {
             if (colisaoPosPuloFoot(jogador)) {
                 int yBloco = ((int) ((jogador.getY() + 39 + jogador.getGravity()) / 40)) * 40;
@@ -115,7 +119,7 @@ public class ServiceJogador {
                 x < mapaService.obterLargura(jogador.getIdMapa())) {
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
-                mapa[yAbaixo][xDireita].equals("chao")) {
+                    mapa[yAbaixo][xDireita].equals("chao")) {
                 return true;
             }
         }
@@ -156,8 +160,8 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) {
-            if (mapa[yCima][xEsquerda].equals("vazio")&&
-                mapa[yCima][xDireita].equals("vazio")) {
+            if (mapa[yCima][xEsquerda].equals("vazio") &&
+                    mapa[yCima][xDireita].equals("vazio")) {
                 return true;
             }
         }
@@ -174,7 +178,7 @@ public class ServiceJogador {
         int yAbaixo = (int) ((jogador.getY() + 40) / 40);
 
         if (x >= 0 &&
-            x < mapaService.obterLargura(jogador.getIdMapa())) {
+                x < mapaService.obterLargura(jogador.getIdMapa())) {
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                     mapa[yAbaixo][xDireita].equals("chao")) {
@@ -225,14 +229,15 @@ public class ServiceJogador {
 
     public void deletePlayer(String id) {
         for (JogadorEntity j : jogadores.values()) {
-            if (j.getId().equals(id)) jogadores.remove(id);
+            if (j.getId().equals(id))
+                jogadores.remove(id);
         }
     }
 
     @Scheduled(fixedRate = 5000)
     public void verificarPlayerOff() {
         long agora = System.currentTimeMillis();
-        
+
         for (JogadorEntity j : jogadores.values()) {
             if (agora - j.getUltimoPing() > 15000) {
                 deletePlayer(j.getId());
@@ -265,23 +270,6 @@ public class ServiceJogador {
 
         jogador.setIdMapa(idMapa);
         jogador.setPass(true);
-
-        if (nome != null && !nome.isBlank() && nome.length() <= 15) {
-            jogador.setNome(nome);
-        }
-        
-        if (cor != null && !cor.isBlank()) {
-            jogador.setCor(cor);
-        }
-        
-
-        return ResponseEntity.status(200).body(jogador.getNome());
-    }
-
-    public ResponsePlayer criarJogador() {
-        JogadorEntity jogador = new JogadorEntity("jogador " + countReqs++);
-        jogadores.put(jogador.getId(), jogador);
-
         jogador.setUltimoPing(System.currentTimeMillis());
 
         Point coordenadas = mapaService.posRespawnMap(jogador.getIdMapa());
@@ -292,7 +280,7 @@ public class ServiceJogador {
 
             jogador.setX(spawnX * 40);
             jogador.setY(spawnY * 40);
-        }else {
+        } else {
             Point spawnVazioProximo = mapaService.posVazioMap(jogador.getIdMapa());
 
             double spawnX = spawnVazioProximo.x;
@@ -302,10 +290,21 @@ public class ServiceJogador {
             jogador.setY(spawnY * 40);
         }
 
-        return new ResponsePlayer(
-            jogador.getId(),
-            jogador.getX(), 
-            jogador.getY()
-        );
+        if (nome != null && !nome.isBlank() && nome.length() <= 15) {
+            jogador.setNome(nome);
+        }
+
+        if (cor != null && !cor.isBlank()) {
+            jogador.setCor(cor);
+        }
+
+        return ResponseEntity.status(200).body(jogador.getNome());
+    }
+
+    public ResponsePlayer criarJogadorAddId() {
+        JogadorEntity jogador = new JogadorEntity("jogador " + countReqs++);
+        jogadores.put(jogador.getId(), jogador);
+
+        return new ResponsePlayer(jogador.getId());
     }
 }

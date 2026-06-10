@@ -20,7 +20,7 @@ public class PlayerRestController {
 
     @GetMapping("/player")
     public ResponsePlayer obtemJogadorInicial() {
-        return serviceJogador.criarJogador();
+        return serviceJogador.criarJogadorAddId();
     }
 
     @PostMapping("/playerUpdata")
