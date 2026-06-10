@@ -1,3 +1,5 @@
+const url = "http://localhost:8080/"
+
 let grid;
 
 let rows;
@@ -5,8 +7,8 @@ let cols;
 
 // Blocos existentes
 const blocos = {
-    "chao": "#664300",
-    "spawn": "#acc95f"
+    "chao": "#5f430f",
+    "spawn": "#fff8ba"
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,13 +21,37 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("button-gerar").addEventListener("click", () => {
         acrecentaNaGrid()
     })
+
+    document.getElementById("button-salvarMapa").addEventListener("click", async () => {
+        try {
+            const input = await fetch(url + "maps/salvarMapa", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(obterMatrizMapa())
+            })
+        } catch (error) {
+            console.log("Erro! " + error);
+        }
+    })
 })
 
 async function copyMapa() {
+    const mapaFormatado = jsonMap();
 
+    try {
+        await navigator.clipboard.writeText(mapaFormatado);
+        alert("Estrutura do mapa copiada no formato customizado!");
+    } catch (error) {
+        console.error("Erro ao copiar:", error);
+    }
+}
+
+function jsonMap() {
     if (!verificardorSpawn()) {
         alert("Erro! Pode haver apenas um spawn");
-        return;
+        return null;
     }
 
     const matriz = obterMatrizMapa();
@@ -37,12 +63,7 @@ async function copyMapa() {
 
     const mapaFormatado = `{\n${linhasFormatadas.join(",\n")}\n};`;
 
-    try {
-        await navigator.clipboard.writeText(mapaFormatado);
-        alert("Estrutura do mapa copiada no formato customizado!");
-    } catch (error) {
-        console.error("Erro ao copiar:", error);
-    }
+    return mapaFormatado;
 }
 
 function verificardorSpawn() {
