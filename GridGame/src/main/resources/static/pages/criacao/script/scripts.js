@@ -1,7 +1,7 @@
 const url = "http://localhost:8080/"
 
 let grid;
-
+let idMapa = -1;
 let rows;
 let cols;
 
@@ -29,8 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     "Content-type": "application/json"
                 },
-                body: JSON.stringify(obterMatrizMapa())
+                body: JSON.stringify({
+                    idMapa: idMapa,
+                    matriz: obterMatrizMapa(),
+                })
             })
+
+            if (input.ok) {
+                idMapa = parseInt(await input.text(), 10);
+                alert("Salvo com sucesso!");
+            }else {
+                alert("Erro ao tentar salvar o mapa\nVerifique se os blocos estão corretos\nPode haver apenas um spawn");
+            }
         } catch (error) {
             console.log("Erro! " + error);
         }
@@ -50,7 +60,7 @@ async function copyMapa() {
 
 function jsonMap() {
     if (!verificardorSpawn()) {
-        alert("Erro! Pode haver apenas um spawn");
+        alert("Erro! Deve haver apenas um spawn");
         return null;
     }
 
