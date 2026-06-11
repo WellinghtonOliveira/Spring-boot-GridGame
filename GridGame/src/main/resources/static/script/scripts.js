@@ -1,6 +1,6 @@
 const url = "http://localhost:8080/";
 
-let idMapa = 0;
+let idMapa = 0; 
 
 export let jogador = {
     "id": "",
