@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.game.GridGame.dto.MapaRequest;
+import com.game.GridGame.dto.ResponseMapa;
 import com.game.GridGame.service.ServiceMap;
 
 @RestController
@@ -33,7 +33,7 @@ public class MapController {
     }
 
     @PostMapping("/salvarMapa")
-    public ResponseEntity<Integer> salvarAtualizarMapas(@RequestBody MapaRequest mapaRecebido) {
+    public ResponseEntity<Integer> salvarAtualizarMapas(@RequestBody ResponseMapa mapaRecebido) {
         Integer responseMap = serviceMaps.salvarAtualizarMapa(mapaRecebido);
 
         if (responseMap != null) return ResponseEntity.status(200).body(responseMap);
