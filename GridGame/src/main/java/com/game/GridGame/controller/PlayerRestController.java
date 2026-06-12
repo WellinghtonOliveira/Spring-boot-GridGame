@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.game.GridGame.dto.InfPLayers;
-import com.game.GridGame.dto.ResponsePlayer;
+import com.game.GridGame.dto.ResponsePlayerId;
 import com.game.GridGame.service.ServiceJogador;
 
 @RestController
@@ -19,7 +19,7 @@ public class PlayerRestController {
     }
 
     @GetMapping("/player")
-    public ResponsePlayer obtemJogadorInicial() {
+    public ResponsePlayerId obtemJogadorIdInicial() {
         return serviceJogador.criarJogadorAddId();
     }
 
