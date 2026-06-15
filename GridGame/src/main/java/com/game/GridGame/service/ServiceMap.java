@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.game.GridGame.dto.MapaRequest;
+import com.game.GridGame.dto.ResponseMapa;
 
 @Service
 public class ServiceMap {
@@ -147,7 +147,7 @@ public class ServiceMap {
         return null;
     }
 
-    public Integer salvarAtualizarMapa(MapaRequest mapaRecebido) {
+    public Integer salvarAtualizarMapa(ResponseMapa mapaRecebido) {
         String[][] mapaMatriz = mapaRecebido.getMatriz();
 
         int idMapa = mapaRecebido.getIdMapa();
@@ -159,13 +159,18 @@ public class ServiceMap {
             }
         }
         
-        if (idMapa < 0 && countSpawn == 1) {
+        if (countSpawn != 1) return null;
+
+        if (idMapa < 0) {
             mapas.put(countIds, mapaMatriz);
             countIds++;
             return countIds - 1;
         } else {
-            mapas.put(idMapa, mapaMatriz);
-            return idMapa;
+            if (mapas.containsKey(idMapa)) {
+                mapas.put(idMapa, mapaMatriz);
+                return idMapa;
+            }
+            return null;
         }
     }
 }
