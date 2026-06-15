@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttonCriarMapa = document.getElementById("button-criar-mapa");
 
     buttonCriarMapa.addEventListener("click", () => {
-        window.location.href = "./pages/criacao/index.html"
+        window.open("./pages/criacao/index.html", "_blank", "noopener,noreferrer");
     })
 
     buttoncomecar.addEventListener("click", async () => {
