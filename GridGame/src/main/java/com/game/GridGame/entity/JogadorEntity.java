@@ -40,7 +40,7 @@ public class JogadorEntity {
         this.y = 0; // Pegar a posição do respaw do player
         this.velocityX = 1.5;
         this.gravity = 0;
-        this.quantiaPulo = 20; // TETO
+        this.quantiaPulo = 16; // TETO
         this.pulo = false;
         this.empuxo = true;
         this.pass = false;
