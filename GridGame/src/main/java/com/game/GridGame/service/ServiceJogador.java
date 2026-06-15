@@ -10,7 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.game.GridGame.dto.InfPLayers;
-import com.game.GridGame.dto.ResponsePlayer;
+import com.game.GridGame.dto.ResponsePlayerInfos;
+import com.game.GridGame.dto.ResponsePlayerId;
 import com.game.GridGame.entity.JogadorEntity;
 
 @Service
@@ -66,15 +67,16 @@ public class ServiceJogador {
         }
     }
 
-    public Collection<ResponsePlayer> getJogadores() {
+    public Collection<ResponsePlayerInfos> getJogadores() {
         return jogadores.values()
                 .stream()
                 .filter(jogador -> jogador.getPass())
-                .map(jogador -> new ResponsePlayer(
-                        jogador.getNome(),
-                        jogador.getCor(),
-                        jogador.getX(),
-                        jogador.getY()))
+                .map(jogador -> new ResponsePlayerInfos(
+                    jogador.getNome(),
+                    jogador.getCor(),
+                    jogador.getIdMapa(),
+                    jogador.getX(),
+                    jogador.getY()))
                 .toList();
     }
 
@@ -203,7 +205,7 @@ public class ServiceJogador {
             if (jogador.getQuantiaPulo() > 0) {
                 if (observerColisionHead(jogador)) {
 
-                    jogador.setY(jogador.getY() - 4);
+                    jogador.setY(jogador.getY() - 5);
                     jogador.setQuantiaPulo(jogador.getQuantiaPulo() - 1);
 
                 } else {
@@ -213,7 +215,7 @@ public class ServiceJogador {
             } else {
                 jogador.setPulo(false);
                 jogador.setEmpuxo(true);
-                jogador.setQuantiaPulo(20);
+                jogador.setQuantiaPulo(16);
             }
         }
     }
@@ -301,10 +303,10 @@ public class ServiceJogador {
         return ResponseEntity.status(200).body(jogador.getNome());
     }
 
-    public ResponsePlayer criarJogadorAddId() {
+    public ResponsePlayerId criarJogadorAddId() {
         JogadorEntity jogador = new JogadorEntity("jogador " + countReqs++);
         jogadores.put(jogador.getId(), jogador);
 
-        return new ResponsePlayer(jogador.getId());
+        return new ResponsePlayerId(jogador.getId());
     }
 }
