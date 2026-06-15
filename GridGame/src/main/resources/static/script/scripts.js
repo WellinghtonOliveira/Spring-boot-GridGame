@@ -164,6 +164,8 @@ async function geraJogador() {
         if (inputDados.ok && inputId.ok) {
             jogador.nome = await inputDados.text();
             window.jogadorOn = true;
+        } else {
+            alert("Erro ao iniciar\nVerifique seu nome")
         }
     } catch (error) {
         console.log("Error: " + error);
