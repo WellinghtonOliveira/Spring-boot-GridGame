@@ -177,6 +177,8 @@ export function desenharJogadoresMultplayer(jogadores) {
     const jogadoresAtivos = new Set();
 
     jogadores.forEach(elJogador => {
+        if (elJogador.idMapa != idMapa) return;
+
         let player = document.getElementById(elJogador.nome);
         let boxName;
 
