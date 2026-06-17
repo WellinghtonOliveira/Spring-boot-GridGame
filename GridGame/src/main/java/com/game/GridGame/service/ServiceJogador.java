@@ -179,13 +179,13 @@ public class ServiceJogador {
         int xDireita = (int) ((jogador.getX() + 35) / 40);
         int yAbaixo = (int) ((jogador.getY() + 40) / 40);
 
-        System.out.println((jogador.getY() + 40) / 40);
-
         //TODO ao cair no ultimo bloco do mapa temos o problema de tamanho excedido, parece que estou tentando acessar um elemento a mais
+
+        System.out.println((jogador.getY() + 40) / 40 + " --- " + (mapaService.obterAltura(jogador.getIdMapa()) - 1));
 
         if (x >= 0 &&
             x < mapaService.obterLargura(jogador.getIdMapa()) &&
-            (jogador.getY() / 40) < mapaService.obterAltura(jogador.getIdMapa()) - 1) {
+            ((jogador.getY() + 40) / 40) < (mapaService.obterAltura(jogador.getIdMapa()) - 1)) {
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                     mapa[yAbaixo][xDireita].equals("chao")) {
