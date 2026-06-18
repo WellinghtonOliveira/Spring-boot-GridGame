@@ -81,19 +81,14 @@ public class ServiceJogador {
     }
 
     public void observerPlayer(String id) {
-        if (id == null)
-            return;
+        if (id == null) return;
         JogadorEntity jogador = jogadores.get(id);
-        if (jogador == null)
-            return;
-
-        if (jogador.getY() / 40 >= mapaService.obterAltura(jogador.getIdMapa()) - 1) {
-            jogador.setY((mapaService.obterAltura(jogador.getIdMapa()) - 1) * 40);
-        }
-
+        if (jogador == null) return;
+        
         observerCanJump(jogador);
         boolean noChao = observerColisionFoot(jogador);
-
+        
+        
         if (!noChao && jogador.getEmpuxo()) {
             if (colisaoPosPuloFoot(jogador)) {
                 int yBloco = ((int) ((jogador.getY() + 39 + jogador.getGravity()) / 40)) * 40;
@@ -117,8 +112,12 @@ public class ServiceJogador {
         int yAbaixo = (int) ((jogador.getY() + 39 + jogador.getGravity()) / 40);
 
         if (y + 1 < mapaService.obterAltura(jogador.getIdMapa()) &&
-                x >= 0 &&
-                x < mapaService.obterLargura(jogador.getIdMapa())) {
+            x >= 0 &&
+            x < mapaService.obterLargura(jogador.getIdMapa())) {
+
+            if (yAbaixo >= mapaService.obterAltura(jogador.getIdMapa())) {
+                return true;
+            }
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                     mapa[yAbaixo][xDireita].equals("chao")) {
@@ -179,13 +178,10 @@ public class ServiceJogador {
         int xDireita = (int) ((jogador.getX() + 35) / 40);
         int yAbaixo = (int) ((jogador.getY() + 40) / 40);
 
-        //TODO ao cair no ultimo bloco do mapa temos o problema de tamanho excedido, parece que estou tentando acessar um elemento a mais
-
-        System.out.println((jogador.getY() + 40) / 40 + " --- " + (mapaService.obterAltura(jogador.getIdMapa()) - 1));
+        if (yAbaixo >= mapaService.obterAltura(jogador.getIdMapa())) return true;
 
         if (x >= 0 &&
-            x < mapaService.obterLargura(jogador.getIdMapa()) &&
-            ((jogador.getY() + 40) / 40) < (mapaService.obterAltura(jogador.getIdMapa()) - 1)) {
+            x < mapaService.obterLargura(jogador.getIdMapa())) {
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                     mapa[yAbaixo][xDireita].equals("chao")) {
