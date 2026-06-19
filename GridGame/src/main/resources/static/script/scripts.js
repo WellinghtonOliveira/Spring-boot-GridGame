@@ -113,10 +113,12 @@ function moveJogador() {
     document.addEventListener('keydown', (e) => {
         if (!window.jogadorOn) return;
         if (e.key == "ArrowRight") {
+            teclas["ArrowLeft"] == false
             teclas[e.key] = true;
         }
 
         if (e.key == "ArrowLeft") {
+            teclas["ArrowRight"] == false
             teclas[e.key] = true;
         }
 
