@@ -69,15 +69,14 @@
     </div>
 
 
+    <script src="script/config.js"></script>
     <script type="module" src="./script/scripts.js"></script>
     <script type="module" src="./script/scriptsViews.js"></script>
     <script type="module">
         import { desenharJogadoresMultplayer } from './script/scripts.js';
         window.client = new StompJs.Client({
-            webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+            webSocketFactory: () => new SockJS(`${window.urlPadrao}ws`),
             onConnect: () => {
-                window.jogadorOn = false;
-
 
                 client.subscribe("/topic/player", (msg) => {
                     const jogador = JSON.parse(msg.body);
