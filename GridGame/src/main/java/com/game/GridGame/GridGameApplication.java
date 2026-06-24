@@ -11,5 +11,3 @@ public class GridGameApplication {
 		SpringApplication.run(GridGameApplication.class, args);
 	}
 }
-
-// TODO testes com o ngrok -> falha, autorizar cors *
