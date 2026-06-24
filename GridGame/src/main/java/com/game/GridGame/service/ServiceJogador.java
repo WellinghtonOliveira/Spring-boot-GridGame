@@ -184,7 +184,7 @@ public class ServiceJogador {
             x < mapaService.obterLargura(jogador.getIdMapa())) {
 
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
-                    mapa[yAbaixo][xDireita].equals("chao")) {
+                mapa[yAbaixo][xDireita].equals("chao")) {
                 return true;
             }
         }
