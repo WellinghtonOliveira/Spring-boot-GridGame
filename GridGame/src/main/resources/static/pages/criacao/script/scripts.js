@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/"
+const url = window.urlPadrao;
 
 let grid;
 let idMapa = -1;
