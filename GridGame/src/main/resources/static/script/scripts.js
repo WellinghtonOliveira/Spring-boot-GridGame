@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/";
+const url = window.urlPadrao;
 
 let idMapa = 0; 
 
@@ -346,5 +346,4 @@ async function carregarMapas() {
     }
 }
 
-// TODO o restart após o jogador sair
-// TODO o checkpoint após o jogador morrer 
+//TODO o checkpoint após o jogador morrer 
