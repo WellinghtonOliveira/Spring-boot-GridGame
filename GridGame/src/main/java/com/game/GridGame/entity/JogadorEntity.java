@@ -36,8 +36,8 @@ public class JogadorEntity {
         this.nome = nome;
         this.vida = 3;
         this.cor = "#e0e0e0";
-        this.x = 0; // Pegar a posição do respaw do player
-        this.y = 0; // Pegar a posição do respaw do player
+        this.x = 0;
+        this.y = 0;
         this.velocityX = 1.5;
         this.gravity = 0;
         this.quantiaPulo = 16; // TETO
