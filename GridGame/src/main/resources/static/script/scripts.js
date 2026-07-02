@@ -263,18 +263,29 @@ function desenharBlock() {
 
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
+            let coordenadaMapaBlocoAtual = MAPAS[idMapa][y][x];
 
-            if (MAPAS[idMapa][y][x] == "chao") {
+            if (coordenadaMapaBlocoAtual != "vazio" && coordenadaMapaBlocoAtual != "spawn") {
                 const index = y * cols + x;
                 const cell = document.getElementById(`cell-num-${index}`);
                 const cellMinimapa = document.getElementById(`cell-num-${index}-minimapa`);
 
-                cellMinimapa.style.backgroundColor = '#664300';
                 cellMinimapa.style.border = 'none';
-
-                cell.style.backgroundColor = '#664300';
                 cell.style.border = 'none';
-            }
+
+                switch (coordenadaMapaBlocoAtual) {
+                    case "chao":
+                        cellMinimapa.style.backgroundColor = '#664300';
+                        cell.style.backgroundColor = '#664300';
+                        break;
+                    case "letal":
+                        cellMinimapa.style.backgroundColor = '#fa6632';
+                        cell.style.backgroundColor = '#fa6632';
+                        break;
+                    default:
+                        console.log(`Erro na coordenada: [${x},${y}] -> ${coordenadaMapaBlocoAtual}`);
+                }
+            } 
         }
     }
 }
