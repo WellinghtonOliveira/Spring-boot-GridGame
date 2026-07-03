@@ -8,7 +8,8 @@ let cols;
 // Blocos existentes
 const blocos = {
     "chao": "#5f430f",
-    "spawn": "#fff8ba"
+    "spawn": "#fff8ba",
+    "letal": "#fa6632"
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function copyMapa() {
     const mapaFormatado = jsonMap();
+    if (mapaFormatado == null) return;
 
     try {
         await navigator.clipboard.writeText(mapaFormatado);
