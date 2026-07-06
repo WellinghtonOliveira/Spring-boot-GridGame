@@ -119,6 +119,11 @@ public class ServiceJogador {
                 return true;
             }
 
+            if (mapa[yAbaixo][xEsquerda].equals("letal") ||
+                mapa[yAbaixo][xDireita].equals("letal")) {
+                return true;
+            }
+
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                     mapa[yAbaixo][xDireita].equals("chao")) {
                 return true;
@@ -141,14 +146,6 @@ public class ServiceJogador {
 
         if (x >= 0) {
             if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
-                mapa[yCima][xDireita].equals("letal") &&
-                mapa[yBaixo][xDireita].equals("letal")) {
-                return true;
-            } else if (direction.equals("esquerda") &&
-                mapa[yCima][xEsquerda].equals("letal") &&
-                mapa[yBaixo][xEsquerda].equals("letal")) {
-                return true;
-            }else if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
                 mapa[yCima][xDireita].equals("vazio") &&
                 mapa[yBaixo][xDireita].equals("vazio")) {
                 return true;
@@ -169,11 +166,6 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) {
-            if (mapa[yCima][xEsquerda].equals("letal") &&
-                mapa[yCima][xDireita].equals("letal")) {
-                return true;
-            }
-
             if (mapa[yCima][xEsquerda].equals("vazio") &&
                 mapa[yCima][xDireita].equals("vazio")) {
                 return true;
@@ -216,6 +208,10 @@ public class ServiceJogador {
         }
 
         return false;
+    }
+
+    public void observerColisionBlocoLetal(JogadorEntity jogador) {
+        
     }
 
     public void observerCanJump(JogadorEntity jogador) {
@@ -272,18 +268,6 @@ public class ServiceJogador {
         if (jogador != null) {
             jogador.setUltimoPing(System.currentTimeMillis());
         }
-    }
-
-    public void observerColisionFacesDamage(JogadorEntity jogador) {
-        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
-
-        int x = (int) jogador.getX() / 40;
-
-        int xEsquerda = (int) ((jogador.getX() + 5) / 40);
-        int xDireita = (int) ((jogador.getX() + 35) / 40);
-        int yAbaixo = (int) ((jogador.getY() + 40) / 40);
-        int yCima = (int) ((jogador.getY() - 1) / 40);
-
     }
 
     public ResponseEntity<String> updatePlayer(InfPLayers data) {
