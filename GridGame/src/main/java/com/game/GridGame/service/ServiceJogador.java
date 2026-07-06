@@ -86,7 +86,6 @@ public class ServiceJogador {
         if (jogador == null) return;
         
         observerCanJump(jogador);
-        observerColisionFacesDamage(jogador);
         boolean noChao = observerColisionFoot(jogador);
         
         
@@ -142,6 +141,14 @@ public class ServiceJogador {
 
         if (x >= 0) {
             if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
+                mapa[yCima][xDireita].equals("letal") &&
+                mapa[yBaixo][xDireita].equals("letal")) {
+                return true;
+            } else if (direction.equals("esquerda") &&
+                mapa[yCima][xEsquerda].equals("letal") &&
+                mapa[yBaixo][xEsquerda].equals("letal")) {
+                return true;
+            }else if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
                 mapa[yCima][xDireita].equals("vazio") &&
                 mapa[yBaixo][xDireita].equals("vazio")) {
                 return true;
@@ -162,6 +169,11 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) {
+            if (mapa[yCima][xEsquerda].equals("letal") &&
+                mapa[yCima][xDireita].equals("letal")) {
+                return true;
+            }
+
             if (mapa[yCima][xEsquerda].equals("vazio") &&
                 mapa[yCima][xDireita].equals("vazio")) {
                 return true;
@@ -183,6 +195,11 @@ public class ServiceJogador {
 
         if (x >= 0 &&
             x < mapaService.obterLargura(jogador.getIdMapa())) {
+            if (mapa[yAbaixo][xEsquerda].equals("letal") ||
+                mapa[yAbaixo][xDireita].equals("letal")) {
+                return true;
+            }
+
             if (mapa[yAbaixo][xEsquerda].equals("chao") ||
                 mapa[yAbaixo][xDireita].equals("chao")) {
                 return true;
