@@ -99,6 +99,7 @@ public class ServiceJogador {
         } else if (noChao) {
             jogador.setGravity(0);
         }
+        observerVida(jogador);
     }
 
     public Boolean colisaoPosPuloFoot(JogadorEntity jogador) {
@@ -121,6 +122,8 @@ public class ServiceJogador {
 
             if (mapa[yAbaixo][xEsquerda].equals("letal") ||
                 mapa[yAbaixo][xDireita].equals("letal")) {
+
+                jogador.setVida(0);
                 return true;
             }
 
@@ -146,6 +149,19 @@ public class ServiceJogador {
 
         if (x >= 0) {
             if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
+                mapa[yCima][xDireita].equals("letal") &&
+                mapa[yBaixo][xDireita].equals("letal")) {
+                
+                jogador.setVida(0);
+            } else if (direction.equals("esquerda") &&
+                mapa[yCima][xEsquerda].equals("letal") &&
+                mapa[yBaixo][xEsquerda].equals("letal")) {
+
+                jogador.setVida(0);
+                return true;
+            }
+
+            if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
                 mapa[yCima][xDireita].equals("vazio") &&
                 mapa[yBaixo][xDireita].equals("vazio")) {
                 return true;
@@ -166,6 +182,11 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) {
+            if (mapa[yCima][xEsquerda].equals("letal") &&
+                mapa[yCima][xDireita].equals("letal")) {
+                jogador.setVida(0);
+            }
+
             if (mapa[yCima][xEsquerda].equals("vazio") &&
                 mapa[yCima][xDireita].equals("vazio")) {
                 return true;
@@ -189,6 +210,7 @@ public class ServiceJogador {
             x < mapaService.obterLargura(jogador.getIdMapa())) {
             if (mapa[yAbaixo][xEsquerda].equals("letal") ||
                 mapa[yAbaixo][xDireita].equals("letal")) {
+                jogador.setVida(0);
                 return true;
             }
 
@@ -210,8 +232,13 @@ public class ServiceJogador {
         return false;
     }
 
-    public void observerColisionBlocoLetal(JogadorEntity jogador) {
-        
+    public void observerVida(JogadorEntity jogador) {
+        int vidaJogador = jogador.getVida();
+
+        if (vidaJogador == 0) {
+            System.out.println("Jogador: " + jogador.getNome() + " --- Morto");
+            jogadores.remove(jogador.getId());
+        }
     }
 
     public void observerCanJump(JogadorEntity jogador) {
