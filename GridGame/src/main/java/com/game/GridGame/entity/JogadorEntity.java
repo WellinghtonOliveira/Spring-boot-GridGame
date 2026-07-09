@@ -34,7 +34,7 @@ public class JogadorEntity {
     public JogadorEntity(String nome) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
-        this.vida = 3;
+        this.vida = 1;
         this.cor = "#e0e0e0";
         this.x = 0;
         this.y = 0;
