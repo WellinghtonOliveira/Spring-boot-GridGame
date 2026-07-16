@@ -177,11 +177,11 @@ public class ServiceJogador {
     public Boolean observerColisionHead(JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
-        int xEsquerda = (int) ((jogador.getX() + 1) / 40);
+        int xEsquerda = (int) ((jogador.getX() + 1) / 40); 
         int xDireita = (int) ((jogador.getX() + 39) / 40);
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
-        if (((jogador.getY() - 1) / 40) >= 0) {
+        if (((jogador.getY() - 1) / 40) >= 0) { 
             if (mapa[yCima][xEsquerda].equals("letal") &&
                 mapa[yCima][xDireita].equals("letal")) {
                 jogador.setVida(0);
