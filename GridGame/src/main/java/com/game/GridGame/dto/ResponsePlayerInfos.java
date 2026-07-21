@@ -5,14 +5,16 @@ public class ResponsePlayerInfos {
     String cor;
 
     int idMapa;
+    int vida;
 
     double x;
     double y;
 
-    public ResponsePlayerInfos(String nome, String cor, int idMapa, double x, double y) {
+    public ResponsePlayerInfos(String nome, String cor, int idMapa, int vida, double x, double y) {
         this.nome = nome;
         this.cor = cor;
         this.idMapa = idMapa;
+        this.vida = vida;
         this.x = x;
         this.y = y;
     }
@@ -27,6 +29,10 @@ public class ResponsePlayerInfos {
 
     public void setIdMapa(int idMapa) {
         this.idMapa = idMapa;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
     }
 
     public void setX(double x) {
@@ -48,6 +54,10 @@ public class ResponsePlayerInfos {
     public int getIdMapa() {
         return idMapa;
     }
+
+    public int getVida() {
+        return vida;
+    }    
 
     public double getX() {
         return x;
