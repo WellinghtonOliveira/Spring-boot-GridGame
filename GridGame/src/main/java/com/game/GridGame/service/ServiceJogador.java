@@ -75,6 +75,7 @@ public class ServiceJogador {
                     jogador.getNome(),
                     jogador.getCor(),
                     jogador.getIdMapa(),
+                    jogador.getVida(),
                     jogador.getX(),
                     jogador.getY()))
                 .toList();
@@ -182,11 +183,11 @@ public class ServiceJogador {
         int yCima = (int) ((jogador.getY() - 1) / 40);
 
         if (((jogador.getY() - 1) / 40) >= 0) { 
-            if (mapa[yCima][xEsquerda].equals("letal") &&
+            if (mapa[yCima][xEsquerda].equals("letal") ||
                 mapa[yCima][xDireita].equals("letal")) {
                 jogador.setVida(0);
             }
-
+            
             if (mapa[yCima][xEsquerda].equals("vazio") &&
                 mapa[yCima][xDireita].equals("vazio")) {
                 return true;
@@ -237,6 +238,9 @@ public class ServiceJogador {
 
         if (vidaJogador == 0) {
             System.out.println("Jogador: " + jogador.getNome() + " --- Morto");
+            if (jogador.getPass()) {
+                
+            }
             jogadores.remove(jogador.getId());
         }
     }
