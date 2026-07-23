@@ -1,12 +1,13 @@
 const url = window.urlPadrao;
 
-let idMapa = 0; 
+let idMapa = 0;
 
 export let jogador = {
     "id": "",
     "idMapa": idMapa,
     "nome": "PLAYER",
-    "cor": "#e0e0e0"
+    "cor": "#e0e0e0",
+    "vida": 1,
 }
 
 const displayMinimapa = document.getElementById("display-grid-mapa");
@@ -104,7 +105,16 @@ function observer() {
                 id: jogador.id
             })
         });
+
+        observerJogadorVida();
     }, 16)
+}
+
+function observerJogadorVida() {
+    if (jogador.vida == 0) {
+        const containerEscolhas = document.getElementById("container-criacao"); 
+        containerEscolhas.style.display = "blcok";
+    }
 }
 
 function moveJogador() {
@@ -285,7 +295,7 @@ function desenharBlock() {
                     default:
                         console.log(`Erro na coordenada: [${x},${y}] -> ${coordenadaMapaBlocoAtual}`);
                 }
-            } 
+            }
         }
     }
 }
@@ -356,5 +366,3 @@ async function carregarMapas() {
         console.log("Erro: " + error);
     }
 }
-
-//TODO o checkpoint após o jogador morrer 
