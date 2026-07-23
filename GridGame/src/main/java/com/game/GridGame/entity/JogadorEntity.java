@@ -26,6 +26,7 @@ public class JogadorEntity {
     private int quantiaPulo;
 
     private long ultimoPing;
+    private long tempoVida;
 
     private boolean empuxo;
     private boolean pulo;
