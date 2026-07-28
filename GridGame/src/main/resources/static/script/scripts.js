@@ -1,13 +1,20 @@
 const url = window.urlPadrao;
 
 let idMapa = 0;
+let jogadorVivo;
+
+let observerInterval = null;
+let pingInterval = null;
+let animationFrameId = null;
+
+let keyDownListener = null;
+let keyUpListener = null;
 
 export let jogador = {
     "id": "",
     "idMapa": idMapa,
     "nome": "PLAYER",
     "cor": "#e0e0e0",
-    "vida": 1,
 }
 
 const displayMinimapa = document.getElementById("display-grid-mapa");
@@ -63,18 +70,18 @@ export async function confJogadorInit() {
 }
 
 function isPlayerOff() {
-    setInterval(() => {
+    pingInterval = setInterval(() => {
         client.publish({
             destination: "/app/ping",
             body: JSON.stringify({
                 id: jogador.id
             })
         });
-    }, 2000)
+    }, 2000);
 }
 
 function loop() {
-    if (teclas['ArrowRight']) {
+    if (teclas["ArrowRight"] && !teclas["ArrowLeft"]) {
         client.publish({
             destination: "/app/move",
             body: JSON.stringify({
@@ -84,7 +91,7 @@ function loop() {
         });
     }
 
-    if (teclas['ArrowLeft']) {
+    if (teclas["ArrowLeft"] && !teclas["ArrowRight"]) {
         client.publish({
             destination: "/app/move",
             body: JSON.stringify({
@@ -94,46 +101,36 @@ function loop() {
         });
     }
 
-    requestAnimationFrame(loop);
+    animationFrameId = requestAnimationFrame(loop);
 }
 
 function observer() {
-    setInterval(() => {
+    observerInterval = setInterval(() => {
         client.publish({
             destination: "/app/observer",
             body: JSON.stringify({
                 id: jogador.id
             })
         });
-
-        observerJogadorVida();
-    }, 16)
-}
-
-function observerJogadorVida() {
-    if (jogador.vida == 0) {
-        const containerEscolhas = document.getElementById("container-criacao"); 
-        containerEscolhas.style.display = "blcok";
-    }
+    }, 16);
 }
 
 function moveJogador() {
-    let podeClicar = false;
 
-    document.addEventListener('keydown', (e) => {
+    keyDownListener = (e) => {
         if (!window.jogadorOn) return;
-        if (e.key == "ArrowRight") {
-            teclas["ArrowLeft"] == false
-            teclas[e.key] = true;
+
+        if (e.key === "ArrowRight") {
+            teclas["ArrowRight"] = true;
         }
 
-        if (e.key == "ArrowLeft") {
-            teclas["ArrowRight"] == false
-            teclas[e.key] = true;
+        if (e.key === "ArrowLeft") {
+            teclas["ArrowLeft"] = true;
         }
 
         if (e.key == "ArrowUp") {
             if (e.repeat) return;
+
             client.publish({
                 destination: "/app/move",
                 body: JSON.stringify({
@@ -142,19 +139,23 @@ function moveJogador() {
                 })
             });
         }
-    });
+    };
 
-    document.addEventListener('keyup', (e) => {
+    keyUpListener = (e) => {
         if (!window.jogadorOn) return;
 
         if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
             teclas[e.key] = false;
+
             client.publish({
                 destination: "/app/stop",
                 body: e.key
             });
         }
-    });
+    };
+
+    document.addEventListener("keydown", keyDownListener);
+    document.addEventListener("keyup", keyUpListener);
 }
 
 async function geraJogador() {
@@ -188,6 +189,8 @@ export function desenharJogadoresMultplayer(jogadores) {
 
     const jogadoresAtivos = new Set();
 
+    let contadorMeuPersonademVive = 0;
+
     jogadores.forEach(elJogador => {
         if (elJogador.idMapa != idMapa) return;
 
@@ -215,13 +218,26 @@ export function desenharJogadoresMultplayer(jogadores) {
 
         if (elJogador.nome === jogador.nome) {
             player.style.zIndex = "11";
+            contadorMeuPersonademVive = 1;
+            jogadorVivo = true;
             atualizarCamera(elJogador);
         }
 
         player.style.transform = `translate(${elJogador.x}px, ${elJogador.y}px)`;
     });
 
+    if (contadorMeuPersonademVive === 0 && jogadorVivo) {
+        observerVidaJodor();
+        jogadorVivo = false;
+    }
+
     apagaJogadorOffline(jogadoresAtivos);
+}
+
+async function observerVidaJodor() {
+    document.getElementById("container-criacao").style.display = "flex";
+    await resetGame();
+    await reconectar();
 }
 
 function apagaJogadorOffline(jogadoresAtivos) {
@@ -342,6 +358,38 @@ function desenharGrid() {
     }
 }
 
+async function reconectar() {
+    // Fecha a conexão antiga, se existir
+    if (window.client) {
+        await window.client.deactivate();
+        window.client = null;
+    }
+
+    // Cria uma nova conexão
+    window.client = new StompJs.Client({
+        webSocketFactory: () => new SockJS(`${window.urlPadrao}ws`),
+
+        onConnect: () => {
+            console.log("Conectado!");
+
+            window.client.subscribe("/topic/player", (msg) => {
+                const jogador = JSON.parse(msg.body);
+
+                if (jogadorOn) {
+                    desenharJogadoresMultplayer(jogador);
+                }
+            });
+        },
+
+        onDisconnect: () => {
+            console.log("Desconectado!");
+        }
+    });
+
+    // Ativa a nova conexão
+    window.client.activate();
+}
+
 async function carregarMapas() {
 
     const selectMapas = document.getElementById("select-mapas");
@@ -365,4 +413,49 @@ async function carregarMapas() {
     } catch (error) {
         console.log("Erro: " + error);
     }
+}
+
+async function resetGame() {
+
+    window.jogadorOn = false;
+
+    teclas["ArrowRight"] = false;
+    teclas["ArrowLeft"] = false;
+
+    // Cancela os intervalos
+    if (observerInterval !== null) {
+        clearInterval(observerInterval);
+        observerInterval = null;
+    }
+
+    if (pingInterval !== null) {
+        clearInterval(pingInterval);
+        pingInterval = null;
+    }
+
+    // Cancela o loop
+    if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
+
+    // Remove os eventos do teclado
+    if (keyDownListener) {
+        document.removeEventListener("keydown", keyDownListener);
+        keyDownListener = null;
+    }
+
+    if (keyUpListener) {
+        document.removeEventListener("keyup", keyUpListener);
+        keyUpListener = null;
+    }
+
+    // Fecha o websocket
+    if (window.client) {
+        await window.client.deactivate();
+        window.client = null;
+    }
+
+    jogador.id = "";
+    jogadorVivo = false;
 }
