@@ -75,7 +75,6 @@ public class ServiceJogador {
                     jogador.getNome(),
                     jogador.getCor(),
                     jogador.getIdMapa(),
-                    jogador.getVida(),
                     jogador.getX(),
                     jogador.getY()))
                 .toList();
@@ -152,7 +151,7 @@ public class ServiceJogador {
             if (direction.equals("direita") && xDireita < mapaService.obterLargura(jogador.getIdMapa()) &&
                 mapa[yCima][xDireita].equals("letal") &&
                 mapa[yBaixo][xDireita].equals("letal")) {
-                
+
                 jogador.setVida(0);
             } else if (direction.equals("esquerda") &&
                 mapa[yCima][xEsquerda].equals("letal") &&
@@ -185,6 +184,7 @@ public class ServiceJogador {
         if (((jogador.getY() - 1) / 40) >= 0) { 
             if (mapa[yCima][xEsquerda].equals("letal") ||
                 mapa[yCima][xDireita].equals("letal")) {
+
                 jogador.setVida(0);
             }
             
@@ -211,6 +211,7 @@ public class ServiceJogador {
             x < mapaService.obterLargura(jogador.getIdMapa())) {
             if (mapa[yAbaixo][xEsquerda].equals("letal") ||
                 mapa[yAbaixo][xDireita].equals("letal")) {
+
                 jogador.setVida(0);
                 return true;
             }
@@ -235,13 +236,10 @@ public class ServiceJogador {
 
     public void observerVida(JogadorEntity jogador) {
         int vidaJogador = jogador.getVida();
-
+        
         if (vidaJogador == 0) {
             System.out.println("Jogador: " + jogador.getNome() + " --- Morto");
-            if (jogador.getPass()) {
-                
-            }
-            jogadores.remove(jogador.getId());
+            deletePlayer(jogador.getId());
         }
     }
 
