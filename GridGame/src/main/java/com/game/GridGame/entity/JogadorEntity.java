@@ -24,6 +24,7 @@ public class JogadorEntity {
     private int vida;
     private int idMapa;
     private int quantiaPulo;
+    private int quantidadePontos;
 
     private long ultimoPing;
 
@@ -77,6 +78,10 @@ public class JogadorEntity {
 
     public void setPulo(boolean pulo) {
         this.pulo = pulo;
+    }
+
+    public void setQuantidadePontos(int quantidadePontos) {
+        this.quantidadePontos = quantidadePontos;
     }
 
     public void setQuantiaPulo(int quantiaPulo) {
@@ -137,6 +142,10 @@ public class JogadorEntity {
 
     public int getQuantiaPulo() {
         return quantiaPulo;
+    }
+
+    public int getQuantidadePotos() {
+        return quantidadePontos;
     }
 
     public boolean getEmpuxo() {
