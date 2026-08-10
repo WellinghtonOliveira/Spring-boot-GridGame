@@ -10,4 +10,4 @@ public class GridGameApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GridGameApplication.class, args);
 	}
-} 
+}
