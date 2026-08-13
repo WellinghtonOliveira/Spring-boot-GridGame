@@ -102,6 +102,13 @@ public class ServiceJogador {
         observerVida(jogador);
     }
 
+    public void pegouTodosOsPontos(JogadorEntity jogador) {
+        int pontos = jogador.getQuantidadePotos();
+        String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
+
+         
+    }
+
     public Boolean colisaoPosPuloFoot(JogadorEntity jogador) {
         String[][] mapa = mapaService.obterMapa(jogador.getIdMapa());
 
