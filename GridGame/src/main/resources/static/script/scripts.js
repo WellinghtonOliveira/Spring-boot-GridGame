@@ -308,6 +308,10 @@ function desenharBlock() {
                         cellMinimapa.style.backgroundColor = '#fa6632';
                         cell.style.backgroundColor = '#fa6632';
                         break;
+                    case "objetivo":
+                        cellMinimapa.style.backgroundColor = 'rgb(188, 222, 165)';
+                        cell.style.backgroundColor = 'rgb(188, 222, 165)';
+                        break;
                     default:
                         console.log(`Erro na coordenada: [${x},${y}] -> ${coordenadaMapaBlocoAtual}`);
                 }
