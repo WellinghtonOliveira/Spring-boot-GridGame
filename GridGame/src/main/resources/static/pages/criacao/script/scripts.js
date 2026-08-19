@@ -9,7 +9,8 @@ let cols;
 const blocos = {
     "chao": "#5f430f",
     "spawn": "#fff8ba",
-    "letal": "#fa6632"
+    "letal": "#fa6632",
+    "objetivo": "#bcdea5"
 }
 
 document.addEventListener("DOMContentLoaded", () => {
